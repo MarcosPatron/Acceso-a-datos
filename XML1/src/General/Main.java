@@ -2,15 +2,37 @@ package General;
 
 import Utils.*;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
-import static Utils.Escritura.escribir;
-import static Utils.General.crearFichero;
 import static Utils.Lectura.leer;
 
 public class Main {
+
+    public static void existe(ArrayList<Deportista> d){
+
+        Path path = Paths.get(General.RUTA_FICHERO);
+
+        if(Files.exists(path)){
+            General.crearFichero();
+            System.out.println("Migrando datos...");
+            Xml.migrarDatos(d);
+
+            //Borro fichero binario
+            try{
+                Files.delete(path);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else{
+            System.out.println("No se han encotrado datos.");
+            General.crearFichero();
+        }
+    }
 
     public static void alta(ArrayList<Deportista> d){
 
@@ -99,7 +121,7 @@ public class Main {
         Scanner ent = new Scanner(System.in);
         ArrayList<Deportista> deportistas = new ArrayList<>();
 
-        crearFichero();
+        existe(deportistas);
         deportistas = leer();
 
 

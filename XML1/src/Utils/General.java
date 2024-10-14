@@ -13,7 +13,9 @@ import java.nio.file.Paths;
 public class General {
 
     public final static String RUTA_DIRECTORIO = "resources" + File.separator;
-    public final static String RUTA_FICHERO = RUTA_DIRECTORIO + "datos.xml";
+    public final static String RUTA_FICHERO = RUTA_DIRECTORIO + "datos.bin";
+    public final static String RUTA_FICHERO_XML = RUTA_DIRECTORIO + "datos.xml";
+
 
     public static void crearFichero() {
         Path path = Paths.get(RUTA_DIRECTORIO);
@@ -38,10 +40,7 @@ public class General {
         // Declaramos las clases necesarias para DOM
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(new File(RUTA_FICHERO));
+        return dBuilder.parse(new File(RUTA_FICHERO_XML));
 
-        return doc;
     }
-
-
 }
