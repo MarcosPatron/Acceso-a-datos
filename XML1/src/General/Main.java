@@ -99,18 +99,6 @@ public class Main {
         Scanner ent = new Scanner(System.in);
         ArrayList<Deportista> deportistas = new ArrayList<>();
 
-        /*
-        Deportista d1 = new Deportista("76049078S", "Marcos", "2000-02-26", Deporte.Natacion);
-        Deportista d2 = new Deportista("76053466D", "Pablo", "2003-12-26", Deporte.Waterpolo);
-        Deportista d3 = new Deportista("76547783F", "Pedro", "1998-03-09", Deporte.Remo);
-        Deportista d4 = new Deportista("76576543G", "Maria", "1993-06-19", Deporte.Vela);
-
-        deportistas.add(d1);
-        deportistas.add(d2);
-        deportistas.add(d3);
-        deportistas.add(d4);
-        */
-
         crearFichero();
         deportistas = leer();
 
