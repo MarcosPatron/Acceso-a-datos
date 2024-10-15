@@ -121,7 +121,7 @@ public class Main {
         Scanner ent = new Scanner(System.in);
         ArrayList<Deportista> deportistas = new ArrayList<>();
 
-        existe(deportistas);
+        //existe(deportistas);
         deportistas = leer();
 
 
