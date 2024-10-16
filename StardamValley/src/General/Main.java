@@ -1,12 +1,24 @@
 package General;
 
+import Utils.*;
+
+import java.util.Properties;
+
+
 public class Main {
 
     public static void menuInicio(){
+
+        boolean existe=false;
+
         System.out.println("BINEVENIDO A STARDAM VALLEY" +
                 "\n--------------------------------" +
-                "\n1. NUEVA PARTIDA" +
-                "\n2. CARGAR PARTIDA");
+                "\n1. NUEVA PARTIDA");
+
+        if(existe){
+            System.out.println("2. CARGAR PARTIDA");
+        }
+
     }
 
     public static void menuFuncionalidades(){
@@ -17,6 +29,14 @@ public class Main {
                 "\n4. VENDER COSECHA" +
                 "\n5. MOSTRAR INFORMACION DE LA GRANJA" +
                 "\n6. SALIR");
+    }
+
+    public static void nuevaPartida(){
+        //Procedimiento: Elimino archivos anteriores -> Opcion de cambiar properties -> Creo archivo huerto
+    }
+
+    public static void cargarPartida(){
+        //Procedimiento: Inicio un nuevo dia, o sigo por el dia en el que lo dejo?
     }
 
     public static void main(String[] args) {
