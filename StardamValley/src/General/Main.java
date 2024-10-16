@@ -2,10 +2,14 @@ package General;
 
 import Utils.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 
 public class Main {
+
 
     public static void menuInicio(){
 
@@ -23,6 +27,7 @@ public class Main {
 
     public static void menuFuncionalidades(){
         System.out.println("STARDAM VALLEY" +
+                "\n---------------------------------------" +
                 "\n1. INICIAR NUEVO DIA" +
                 "\n2. ATENDER CULTIVOS" +
                 "\n3. PLANTAR CULTIVOS EN COLUMNA" +
@@ -41,6 +46,9 @@ public class Main {
 
     public static void main(String[] args) {
 
+        Map<String, ArrayList<Semillas>> semillas = new HashMap<>();
+
+        XMLFile.cargarSemillas(semillas);
 
     }
 }
