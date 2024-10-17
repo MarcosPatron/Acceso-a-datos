@@ -8,9 +8,9 @@ public class Granja {
     private int dinero;
     private Estaciones estacion;
     private String[] semillasVenta;
-    private ArrayList<Semillas> frutas;
+    private ArrayList<Semilla> frutas;
 
-    public Granja(int dinero, Estaciones estacion, String[] semillasVenta, ArrayList<Semillas> frutas) {
+    public Granja(int dinero, Estaciones estacion, String[] semillasVenta, ArrayList<Semilla> frutas) {
         this.diaJuego = 0;
         this.dinero = dinero;
         this.estacion = estacion;
@@ -50,11 +50,11 @@ public class Granja {
         this.semillasVenta = semillasVenta;
     }
 
-    public ArrayList<Semillas> getFrutas() {
+    public ArrayList<Semilla> getFrutas() {
         return frutas;
     }
 
-    public void setFrutas(ArrayList<Semillas> frutas) {
+    public void setFrutas(ArrayList<Semilla> frutas) {
         this.frutas = frutas;
     }
 

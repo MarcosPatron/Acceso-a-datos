@@ -1,6 +1,6 @@
 package General;
 
-public class Semillas {
+public class Semilla {
 
     private String id;
     private String nombre;
@@ -10,7 +10,7 @@ public class Semillas {
     private int precioVenta;
     private int maxFrutos;
 
-    public Semillas(int id, String nombre, String estacion, int diasCrecimiento, int precioCompra, int precioVenta, int maxFrutos) {
+    public Semilla(String id, String nombre, String estacion, int diasCrecimiento, int precioCompra, int precioVenta, int maxFrutos) {
         this.id = id;
         this.nombre = nombre;
         this.estacion = estacion;
@@ -20,11 +20,11 @@ public class Semillas {
         this.maxFrutos = maxFrutos;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

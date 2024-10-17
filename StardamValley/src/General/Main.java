@@ -5,7 +5,6 @@ import Utils.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 
 public class Main {
@@ -46,9 +45,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Map<String, ArrayList<Semillas>> semillas = new HashMap<>();
+        Map<String, ArrayList<Semilla>> semillas = new HashMap<>();
 
         XMLFile.cargarSemillas(semillas);
-
     }
 }
