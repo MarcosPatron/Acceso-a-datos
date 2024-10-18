@@ -11,5 +11,6 @@ public class Constantes {
 
     //Fichero aleatorio
     public static final int TAM_HUERTO_BYTES = 9;
+    public static final int BOOL_INT = 5;
 
 }

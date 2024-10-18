@@ -67,9 +67,5 @@ public class Main {
         XMLFile.cargarSemillas(semillas);
 
         PropertiesF.inicializarPropiedades();
-
-        Huerto.crearHuerto();
-
-        Huerto.mostrarHuerto();
     }
 }
