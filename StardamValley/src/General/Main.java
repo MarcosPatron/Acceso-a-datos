@@ -2,9 +2,11 @@ package General;
 
 import Utils.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 
 public class Main {
@@ -12,16 +14,15 @@ public class Main {
 
     public static void menuInicio(){
 
-        boolean existe=false;
+        Path path = Paths.get(Constantes.STARDAM_VALLEY);
 
         System.out.println("BINEVENIDO A STARDAM VALLEY" +
-                "\n--------------------------------" +
+                "\n-----------------------------------" +
                 "\n1. NUEVA PARTIDA");
 
-        if(existe){
+        if(Files.exists(path)){
             System.out.println("2. CARGAR PARTIDA");
         }
-
     }
 
     public static void menuFuncionalidades(){
@@ -36,11 +37,27 @@ public class Main {
     }
 
     public static void nuevaPartida(){
-        //Procedimiento: Elimino archivos anteriores -> Opcion de cambiar properties -> Creo archivo huerto
+
+        Scanner ent = new Scanner(System.in);
+        String resp;
+
+        PropertiesF.crearFichero(Constantes.STARDAM_VALLEY);
+
+        System.out.println("¿Quieres cambiar la configaración de tu partida?");
+        resp = ent.nextLine();
+
+        if(resp.equalsIgnoreCase("si")){
+            PropertiesF.setPropiedades();
+        }
+        else {
+            PropertiesF.inicializarPropiedades();
+        }
+
+        Huerto.crearHuerto();
     }
 
     public static void cargarPartida(){
-        //Procedimiento: Inicio un nuevo dia, o sigo por el dia en el que lo dejo?
+
     }
 
     public static void main(String[] args) {
@@ -48,5 +65,11 @@ public class Main {
         Map<String, ArrayList<Semilla>> semillas = new HashMap<>();
 
         XMLFile.cargarSemillas(semillas);
+
+        PropertiesF.inicializarPropiedades();
+
+        Huerto.crearHuerto();
+
+        Huerto.mostrarHuerto();
     }
 }
