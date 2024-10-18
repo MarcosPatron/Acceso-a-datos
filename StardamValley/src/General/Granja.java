@@ -1,5 +1,6 @@
 package General;
 
+import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 
 public class Granja {
@@ -8,14 +9,14 @@ public class Granja {
     private int dinero;
     private Estaciones estacion;
     private String[] semillasVenta;
-    private ArrayList<Semilla> frutas;
+    private Almacen almacen;
 
-    public Granja(int dinero, Estaciones estacion, String[] semillasVenta, ArrayList<Semilla> frutas) {
+    public Granja(int dinero, Estaciones estacion, String[] semillasVenta, Almacen almacen) {
         this.diaJuego = 0;
         this.dinero = dinero;
         this.estacion = estacion;
         this.semillasVenta = semillasVenta;
-        this.frutas = frutas;
+        this.almacen = almacen;
     }
 
     public int getDiaJuego() {
@@ -50,12 +51,12 @@ public class Granja {
         this.semillasVenta = semillasVenta;
     }
 
-    public ArrayList<Semilla> getFrutas() {
-        return frutas;
+    public Almacen getAlmacen() {
+        return almacen;
     }
 
-    public void setFrutas(ArrayList<Semilla> frutas) {
-        this.frutas = frutas;
+    public void setAlmacen(Almacen almacen) {
+        this.almacen = almacen;
     }
 
 

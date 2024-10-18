@@ -6,7 +6,11 @@ import java.util.Map;
 
 public class Almacen {
 
-    private static HashMap<String, Integer> frutos;
+    private HashMap<String, Integer> frutos;
+
+    public Almacen() {
+        this.frutos = new HashMap<>();
+    }
 
     public Almacen(HashMap<String, Integer> frutas) {
         this.frutos = frutas;
@@ -20,9 +24,9 @@ public class Almacen {
         this.frutos = frutos;
     }
 
-    public static void mostrarAlmacen(){
+    public void mostrarAlmacen(){
 
-        for (Map.Entry<String, Integer> frutos : frutos.entrySet()) {
+        for (Map.Entry<String, Integer> frutos : this.frutos.entrySet()) {
             System.out.print("[" + frutos.getKey()+ " - " + frutos.getValue() + "]");
         }
         System.out.println();

@@ -62,7 +62,7 @@ public class Huerto {
         }
     }
 
-    public static void atendercCultivos(Map<String, ArrayList<Semilla>> semillas){
+    public static void atendercCultivos(Map<String, ArrayList<Semilla>> semillas, Granja g){
 
         try{
 
@@ -73,8 +73,7 @@ public class Huerto {
             FileInputStream entrada = new FileInputStream(Constantes.PERSOMNALIZED_PROPERTIES);
             propiedades.load(entrada);
 
-            Semilla aux;
-            int auxInt;
+            int aux;
             boolean enc = false;
             String idAux;
             String estacion = propiedades.getProperty("estacion");
@@ -88,20 +87,20 @@ public class Huerto {
 
                     for (int k = 0; k < semillas.get(estacion).size() && !enc; k++) {
                         if(idAux.equals(semillas.get(estacion).get(k).getId())){
-                            aux = semillas.get(estacion).get(k);
-                            if(aux.getDiasCrecimiento() >= raf.readInt()){
+                            if(semillas.get(estacion).get(k).getDiasCrecimiento() == raf.readInt()){
 
                                 raf.seek(raf.getFilePointer()-Constantes.TAM_HUERTO_BYTES);
                                 raf.writeInt(-1);
                                 raf.writeBoolean(false);
                                 raf.writeInt(-1);
-
+                                g.getAlmacen().getFrutos().put(semillas.get(estacion).get(k).getNombre(),
+                                        (int)Math.floor(Math.random()*semillas.get(estacion).get(k).getMaxFrutos()+1));
                             }
                             else{
                                 raf.seek(raf.getFilePointer()-Integer.BYTES);
-                                auxInt = raf.readInt();
+                                aux = raf.readInt();
                                 raf.seek(raf.getFilePointer()-Integer.BYTES);
-                                raf.writeInt(auxInt+1);
+                                raf.writeInt(aux+1);
                             }
                         }
                     }
@@ -114,6 +113,11 @@ public class Huerto {
 
     }
 
+    public static void plantarSemillaColumna(Semilla semilla, int col){
+
+        
+
+    }
 }
 
 
