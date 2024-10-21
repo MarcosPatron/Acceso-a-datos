@@ -62,6 +62,7 @@ public class Huerto {
         }
     }
 
+    // Cambiar por Map<Integer, Semilla>
     public static void atendercCultivos(Map<String, ArrayList<Semilla>> semillas, Granja g){
 
         try{
@@ -73,7 +74,6 @@ public class Huerto {
             FileInputStream entrada = new FileInputStream(Constantes.PERSOMNALIZED_PROPERTIES);
             propiedades.load(entrada);
 
-            int aux;
             boolean enc = false;
             String idAux;
             String estacion = propiedades.getProperty("estacion");
@@ -89,18 +89,13 @@ public class Huerto {
                         if(idAux.equals(semillas.get(estacion).get(k).getId())){
                             if(semillas.get(estacion).get(k).getDiasCrecimiento() == raf.readInt()){
 
+                                // Cuidado con el mov hacia atras
                                 raf.seek(raf.getFilePointer()-Constantes.TAM_HUERTO_BYTES);
                                 raf.writeInt(-1);
                                 raf.writeBoolean(false);
                                 raf.writeInt(-1);
-                                g.getAlmacen().getFrutos().put(semillas.get(estacion).get(k).getNombre(),
+                                g.getAlmacen().getFrutos().put(semillas.get(estacion).get(k),
                                         (int)Math.floor(Math.random()*semillas.get(estacion).get(k).getMaxFrutos()+1));
-                            }
-                            else{
-                                raf.seek(raf.getFilePointer()-Integer.BYTES);
-                                aux = raf.readInt();
-                                raf.seek(raf.getFilePointer()-Integer.BYTES);
-                                raf.writeInt(aux+1);
                             }
                         }
                     }
@@ -121,21 +116,21 @@ public class Huerto {
 
             Properties propiedades = new Properties();
 
-            raf.seek((long) Constantes.TAM_HUERTO_BYTES *(col-1));
+            raf.seek((long) Constantes.TAM_HUERTO_BYTES * (col-1));
             if(raf.readInt() != -1) {
                 System.out.println("Esta columna ya ha sido plantada, selecciona otra.");
                 return;
             }
 
-            raf.seek((long) Constantes.TAM_HUERTO_BYTES *(col-1));
+            raf.seek((long) Constantes.TAM_HUERTO_BYTES * (col-1));
 
             for (int i = 0; i < filas; i++) {
 
                 raf.writeInt(Integer.parseInt(semilla.getId()));
                 raf.writeBoolean(false);
-                raf.writeInt(0);
+                raf.writeInt(1);
 
-                raf.seek(raf.getFilePointer()+Constantes.TAM_HUERTO_BYTES*(filas-1));
+                raf.seek(raf.getFilePointer() + Constantes.TAM_HUERTO_BYTES * (filas - 1));
             }
 
         }catch (Exception e) {
@@ -143,6 +138,32 @@ public class Huerto {
         }
     }
 
+    public static void nuevoDiaHuerto(){
+
+        try{
+
+            RandomAccessFile raf = new RandomAccessFile(Constantes.HUERTO, "rw");
+
+            Properties propiedades = new Properties();
+
+            int aux;
+
+            for (int i = 0; i < filas; i++) {
+                for (int j = 0; j < columnas; j++) {
+
+                    raf.seek(filas * Constantes.TAM_HUERTO_BYTES * (columnas+1) + Integer.BYTES);
+                    if(raf.readBoolean()) {
+                        raf.seek(raf.getFilePointer() - Integer.BYTES);
+                        aux = raf.readInt();
+                        raf.seek(raf.getFilePointer() - Integer.BYTES);
+                        raf.writeInt(aux + 1);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
 

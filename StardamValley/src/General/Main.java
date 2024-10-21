@@ -12,6 +12,22 @@ import java.util.*;
 public class Main {
 
 
+    public static String eleccion(){
+
+        Scanner ent = new Scanner(System.in);
+        String sal;
+
+        try{
+
+            sal = ent.nextLine();
+        } catch (InputMismatchException e) {
+            sal = "";
+            throw new RuntimeException(e);
+        }
+
+        return sal;
+    }
+
     public static void menuInicio(){
 
         Path path = Paths.get(Constantes.STARDAM_VALLEY);
@@ -38,13 +54,12 @@ public class Main {
 
     public static void nuevaPartida(){
 
-        Scanner ent = new Scanner(System.in);
         String resp;
 
         PropertiesF.crearFichero(Constantes.STARDAM_VALLEY);
 
         System.out.println("¿Quieres cambiar la configaración de tu partida?");
-        resp = ent.nextLine();
+        resp = eleccion();
 
         if(resp.equalsIgnoreCase("si")){
             PropertiesF.setPropiedades();
@@ -60,26 +75,62 @@ public class Main {
 
     }
 
+    public static void iniciarJuego(){
+
+
+
+    }
+
     public static void main(String[] args) {
 
         Map<String, ArrayList<Semilla>> semillas = new HashMap<>();
-        Granja g = new Granja(1000, Estaciones.Primavera, new String[3], new Almacen());
+        Boolean salir = false;
 
         XMLFile.cargarSemillas(semillas);
-
         PropertiesF.inicializarPropiedades();
 
-        Huerto.crearHuerto();
+        Granja j;
 
-        Huerto.plantarSemillaColumna(semillas.get("Primavera").get(0),1);
-        Huerto.plantarSemillaColumna(semillas.get("Primavera").get(1),2);
-        Huerto.plantarSemillaColumna(semillas.get("Primavera").get(2),3);
-        Huerto.plantarSemillaColumna(semillas.get("Primavera").get(3),4);
+        do{
 
-        Huerto.mostrarHuerto();
+            menuInicio();
 
-        Huerto.atendercCultivos(semillas, g);
+            switch (eleccion()){
+                case "1":
+                    nuevaPartida();
+                    salir = true;
+                    break;
+                case "2":
+                    g = BinF.cargarGranja();
+                    salir = true;
+                    break;
+                default:
+                    System.out.println("ERROR. Esa elección no existe.");
+            }
+        }while(!salir);
 
-        Huerto.mostrarHuerto();
+        salir = false;
+
+        do{
+
+            menuFuncionalidades();
+            switch (eleccion()) {
+                case "1":
+
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                case "5":
+                    break;
+                case "6":
+                    break;
+                default:
+                    System.out.println("ERROR. Esa elección no existe.");
+            }
+        }while(!salir);
     }
 }
