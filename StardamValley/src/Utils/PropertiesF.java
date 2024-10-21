@@ -48,7 +48,7 @@ public class PropertiesF {
             propiedades.setProperty("filas", "4");
             propiedades.setProperty("columnas", "4");
             propiedades.setProperty("presupuesto", "1000");
-            propiedades.setProperty("estacion", "PRIMAVERA");
+            propiedades.setProperty("estacion", "Primavera");
             propiedades.setProperty("duracion_esacion", "30");
 
             FileOutputStream salida = new FileOutputStream(Constantes.PERSOMNALIZED_PROPERTIES);

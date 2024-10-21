@@ -63,9 +63,23 @@ public class Main {
     public static void main(String[] args) {
 
         Map<String, ArrayList<Semilla>> semillas = new HashMap<>();
+        Granja g = new Granja(1000, Estaciones.Primavera, new String[3], new Almacen());
 
         XMLFile.cargarSemillas(semillas);
 
         PropertiesF.inicializarPropiedades();
+
+        Huerto.crearHuerto();
+
+        Huerto.plantarSemillaColumna(semillas.get("Primavera").get(0),1);
+        Huerto.plantarSemillaColumna(semillas.get("Primavera").get(1),2);
+        Huerto.plantarSemillaColumna(semillas.get("Primavera").get(2),3);
+        Huerto.plantarSemillaColumna(semillas.get("Primavera").get(3),4);
+
+        Huerto.mostrarHuerto();
+
+        Huerto.atendercCultivos(semillas, g);
+
+        Huerto.mostrarHuerto();
     }
 }

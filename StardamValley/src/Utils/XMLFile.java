@@ -78,10 +78,10 @@ public class XMLFile {
                 }
             }
 
-            semillas.put("primavera", primavera);
-            semillas.put("verano", verano);
-            semillas.put("otono", otono);
-            semillas.put("invierno", invierno);
+            semillas.put("Primavera", primavera);
+            semillas.put("Verano", verano);
+            semillas.put("Otoño", otono);
+            semillas.put("Invierno", invierno);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

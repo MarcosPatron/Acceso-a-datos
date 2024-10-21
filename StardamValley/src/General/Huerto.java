@@ -51,7 +51,7 @@ public class Huerto {
 
             for (int i = 0; i < filas; i++) {
                 for (int j = 0; j < columnas; j++) {
-                    System.out.print("[" + raf.readInt() + " | " + raf.readBoolean() + " | " + raf.readInt() + "] ");
+                    System.out.print("[" + raf.readInt() + " | " + raf.readBoolean() + " | " + raf.readInt() + "]   ");
 
                 }
                 System.out.println();
@@ -115,9 +115,35 @@ public class Huerto {
 
     public static void plantarSemillaColumna(Semilla semilla, int col){
 
-        
+        try {
 
+            RandomAccessFile raf = new RandomAccessFile(Constantes.HUERTO, "rw");
+
+            Properties propiedades = new Properties();
+
+            raf.seek((long) Constantes.TAM_HUERTO_BYTES *(col-1));
+            if(raf.readInt() != -1) {
+                System.out.println("Esta columna ya ha sido plantada, selecciona otra.");
+                return;
+            }
+
+            raf.seek((long) Constantes.TAM_HUERTO_BYTES *(col-1));
+
+            for (int i = 0; i < filas; i++) {
+
+                raf.writeInt(Integer.parseInt(semilla.getId()));
+                raf.writeBoolean(false);
+                raf.writeInt(0);
+
+                raf.seek(raf.getFilePointer()+Constantes.TAM_HUERTO_BYTES*(filas-1));
+            }
+
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
+
+
 }
 
 
