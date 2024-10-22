@@ -19,12 +19,12 @@ public class Granja implements Serializable {
     private Tienda semillasVenta;
     private Almacen almacen;
 
-    public Granja(int dinero, Estaciones estacion, Almacen almacen) {
+    public Granja(int dinero, Estaciones estacion){
         this.diaJuego = 0;
         this.dinero = dinero;
         this.estacion = estacion;
         this.semillasVenta = new Tienda();
-        this.almacen = almacen;
+        this.almacen = new Almacen();
     }
 
     public int getDiaJuego() {
@@ -81,7 +81,7 @@ public class Granja implements Serializable {
         Huerto.mostrarHuerto();
     }
 
-    public void nuevoDia(Map<String, ArrayList> sem){
+    public void nuevoDia(Map<String, ArrayList<Semilla>> sem){
 
         setDiaJuego(this.diaJuego + 1);
         if(this.diaJuego > 30) {

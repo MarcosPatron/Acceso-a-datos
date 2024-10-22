@@ -8,6 +8,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static java.lang.Integer.parseInt;
+
 
 public class Main {
 
@@ -52,7 +54,7 @@ public class Main {
                 "\n6. SALIR");
     }
 
-    public static void nuevaPartida(){
+    public static Granja nuevaPartida(){
 
         String resp;
 
@@ -69,6 +71,7 @@ public class Main {
         }
 
         Huerto.crearHuerto();
+        return PropertiesF.nuevaGranja();
     }
 
     public static void cargarPartida(){
@@ -89,7 +92,7 @@ public class Main {
         XMLFile.cargarSemillas(semillas);
         PropertiesF.inicializarPropiedades();
 
-        Granja j;
+        Granja g = new Granja(1000, Estaciones.Primavera);
 
         do{
 
@@ -97,11 +100,11 @@ public class Main {
 
             switch (eleccion()){
                 case "1":
-                    nuevaPartida();
+                    g = nuevaPartida();
                     salir = true;
                     break;
                 case "2":
-                    g = BinF.cargarGranja();
+                     g = BinF.cargarGranja();
                     salir = true;
                     break;
                 default:
@@ -111,26 +114,40 @@ public class Main {
 
         salir = false;
 
+        g.nuevoDia(semillas);
         do{
 
             menuFuncionalidades();
             switch (eleccion()) {
                 case "1":
-
+                    g.nuevoDia(semillas);
                     break;
                 case "2":
+                    Huerto.atendercCultivos(semillas, g);
                     break;
                 case "3":
+                    Huerto.mostrarHuerto();
+                    g.getSemillasVenta().mostrarTienda();
+                    System.out.println("¿En que posición quires plantar las semillas?");
+                    Huerto.plantarSemillaColumna(semillas.get("Promavera").get(0), parseInt(eleccion()));
                     break;
                 case "4":
+                    g.setDinero(g.getDinero() + g.getAlmacen().venderCosecha());
                     break;
                 case "5":
+                    g.mostrarGranja();
                     break;
                 case "6":
+                    System.out.println("Saliendo...");
+                    salir = true;
                     break;
                 default:
                     System.out.println("ERROR. Esa elección no existe.");
             }
+            if(!salir) {
+                Huerto.mostrarHuerto();
+            }
         }while(!salir);
+        BinF.guardarPartida(g);
     }
 }

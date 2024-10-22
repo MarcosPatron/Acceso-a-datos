@@ -1,5 +1,8 @@
 package Utils;
 
+import General.Estaciones;
+import General.Granja;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -9,6 +12,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.Scanner;
+
+import static java.lang.Integer.parseInt;
 
 public class PropertiesF {
 
@@ -102,5 +107,27 @@ public class PropertiesF {
         }
     }
 
-    
+    public static Granja nuevaGranja() {
+
+        Properties propiedades = new Properties();
+        int presupuesto;
+        Estaciones estacion;
+
+        try {
+            FileInputStream entrada = new FileInputStream(Constantes.PERSOMNALIZED_PROPERTIES);
+            propiedades.load(entrada);
+            entrada.close();
+
+            presupuesto = parseInt(propiedades.getProperty("presupuesto"));
+            estacion = Estaciones.valueOf(propiedades.getProperty("estacion"));
+
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new Granja(presupuesto, estacion);
+    }
+
 }

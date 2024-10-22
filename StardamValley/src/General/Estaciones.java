@@ -1,6 +1,8 @@
 package General;
 
-public enum Estaciones {
+import java.io.Serializable;
+
+public enum Estaciones implements Serializable {
 
     Primavera, Verano, Otono, Invierno;
 }

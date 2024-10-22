@@ -1,10 +1,11 @@
 package General;
 
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Almacen {
+public class Almacen implements Serializable {
 
     private HashMap<Semilla, Integer> frutos;
 

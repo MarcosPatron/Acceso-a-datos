@@ -1,11 +1,14 @@
 package General;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Tienda {
+import static General.Main.eleccion;
+
+public class Tienda implements Serializable {
 
     private HashSet<Semilla> tienda;
 
@@ -50,6 +53,10 @@ public class Tienda {
         for (Semilla semilla : getTienda()) {
             System.out.print(semilla.getNombre() + " | ");
         }
+    }
 
+    public Semilla comprarSemillas(int dinero, int nSemillas){
+
+        return null;
     }
 }

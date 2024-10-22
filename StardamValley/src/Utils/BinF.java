@@ -29,7 +29,7 @@ public class BinF {
         return g;
     }
 
-    public void guardarPartida(Granja g){
+    public static void guardarPartida(Granja g){
 
         Path path = Paths.get(Constantes.STARDAM_VALLEY);
 
@@ -46,5 +46,6 @@ public class BinF {
             throw new RuntimeException(e);
         }
     }
+
 
 }
