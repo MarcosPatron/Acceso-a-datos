@@ -58,6 +58,8 @@ public class Main {
 
         String resp;
 
+        PropertiesF.eliminarFichero(Constantes.STARDAM_VALLEY);
+
         PropertiesF.crearFichero(Constantes.STARDAM_VALLEY);
 
         System.out.println("¿Quieres cambiar la configaración de tu partida?");
@@ -72,16 +74,6 @@ public class Main {
 
         Huerto.crearHuerto();
         return PropertiesF.nuevaGranja();
-    }
-
-    public static void cargarPartida(){
-
-    }
-
-    public static void iniciarJuego(){
-
-
-
     }
 
     public static void main(String[] args) {
@@ -121,15 +113,18 @@ public class Main {
             switch (eleccion()) {
                 case "1":
                     g.nuevoDia(semillas);
+                    Huerto.mostrarHuerto();
                     break;
                 case "2":
                     Huerto.atendercCultivos(semillas, g);
+                    Huerto.mostrarHuerto();
                     break;
                 case "3":
                     Huerto.mostrarHuerto();
                     g.getSemillasVenta().mostrarTienda();
                     System.out.println("¿En que posición quires plantar las semillas?");
-                    Huerto.plantarSemillaColumna(semillas.get("Promavera").get(0), parseInt(eleccion()));
+                    Huerto.plantarSemillaColumna(semillas.get("Primavera").get(0), parseInt(eleccion()));
+                    Huerto.mostrarHuerto();
                     break;
                 case "4":
                     g.setDinero(g.getDinero() + g.getAlmacen().venderCosecha());
@@ -144,9 +139,7 @@ public class Main {
                 default:
                     System.out.println("ERROR. Esa elección no existe.");
             }
-            if(!salir) {
-                Huerto.mostrarHuerto();
-            }
+
         }while(!salir);
         BinF.guardarPartida(g);
     }

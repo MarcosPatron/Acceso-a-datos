@@ -3,10 +3,7 @@ package Utils;
 import General.Estaciones;
 import General.Granja;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,6 +13,26 @@ import java.util.Scanner;
 import static java.lang.Integer.parseInt;
 
 public class PropertiesF {
+
+    public static String tomarValor(String nombre){
+
+        String valor;
+
+        try{
+            RandomAccessFile raf = new RandomAccessFile(Constantes.HUERTO, "rw");
+
+            Properties propiedades = new Properties();
+
+            FileInputStream entrada = new FileInputStream(Constantes.PERSOMNALIZED_PROPERTIES);
+            propiedades.load(entrada);
+
+            valor = propiedades.getProperty(nombre);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return valor;
+    }
 
     public static void crearFichero(String nombreFichero) {
         Path path = Paths.get(nombreFichero);

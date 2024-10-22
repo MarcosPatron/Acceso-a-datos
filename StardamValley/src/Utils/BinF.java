@@ -40,7 +40,6 @@ public class BinF {
 
             oos.writeObject(g);
 
-            oos.writeObject(g);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
