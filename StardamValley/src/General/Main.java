@@ -121,9 +121,11 @@ public class Main {
                     break;
                 case "3":
                     Huerto.mostrarHuerto();
-                    g.getSemillasVenta().mostrarTienda();
                     System.out.println("¿En que posición quires plantar las semillas?");
-                    Huerto.plantarSemillaColumna(semillas.get("Primavera").get(0), parseInt(eleccion()));
+                    String pos = eleccion();
+                    g.getSemillasVenta().mostrarTienda();
+                    System.out.println("¿Qué semilla quieres plantar?");
+                    Huerto.plantarSemillaColumna(g.getSemillasVenta().comprarSemillas(g, eleccion()), parseInt(pos));
                     Huerto.mostrarHuerto();
                     break;
                 case "4":

@@ -3,6 +3,7 @@ package General;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class Almacen implements Serializable {
@@ -34,10 +35,16 @@ public class Almacen implements Serializable {
     }
 
     public int venderCosecha(){
-        int cont = 0;
 
-        for (Map.Entry<Semilla, Integer> frutos : this.frutos.entrySet()) {
-            cont += frutos.getKey().getPrecioVenta() * frutos.getValue();
+        int cont = 0;
+        Iterator<Map.Entry<Semilla, Integer>> iter = this.frutos.entrySet().iterator();
+
+        while (iter.hasNext()) {
+            Map.Entry<Semilla, Integer> entry = iter.next();
+
+            cont += entry.getKey().getPrecioVenta() * entry.getValue();
+            
+            iter.remove();
         }
 
         return cont;

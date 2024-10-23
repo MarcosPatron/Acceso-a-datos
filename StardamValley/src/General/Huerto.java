@@ -65,33 +65,32 @@ public class Huerto {
     public static void atendercCultivos(Map<String, ArrayList<Semilla>> semillas, Granja g){
 
         int filas, columnas;
+        String estacion;
 
         try{
             RandomAccessFile raf = new RandomAccessFile(Constantes.HUERTO, "rw");
 
-            Properties propiedades = new Properties();
-
-            FileInputStream entrada = new FileInputStream(Constantes.PERSOMNALIZED_PROPERTIES);
-            propiedades.load(entrada);
-
             boolean enc = false;
             String idAux;
             int aux;
-            String estacion = propiedades.getProperty("estacion");
 
+
+            estacion = PropertiesF.tomarValor("estacion");
             filas = parseInt(PropertiesF.tomarValor("filas"));
             columnas = parseInt(PropertiesF.tomarValor("columnas"));
 
             Semilla[] semColumnas = new Semilla[filas];
+            int[] numFrutos = new int[filas];
 
+            //Tomo las semillas que estan plantadas en cada fila
             for (int i = 0; i < filas; i++) {
-
                 idAux = String.valueOf(raf.readInt());
                 raf.seek(raf.getFilePointer() + (Integer.BYTES + 1));
 
                 for (int j = 0; j < semillas.get(estacion).size() && !enc; j++) {
                     if(idAux.equals(semillas.get(estacion).get(j).getId())) {
                         semColumnas[i] = semillas.get(estacion).get(j);
+                        //numFrutos[i] = g.getAlmacen().getFrutos().get(semColumnas[i]);
                         enc = true;
                     }
                 }
@@ -108,8 +107,8 @@ public class Huerto {
                         raf.writeInt(-1);
                         raf.writeBoolean(false);
                         raf.writeInt(-1); // 9
-                        g.getAlmacen().getFrutos().put(semColumnas[i],
-                                (int)Math.floor(Math.random() * semColumnas[i].getMaxFrutos() + 1));
+                        //numFrutos[i] += (int)Math.floor(Math.random() * semColumnas[i].getMaxFrutos() + 1);
+                        //g.getAlmacen().getFrutos().put(semColumnas[i], numFrutos[i]);
                     }
 
                     /*
