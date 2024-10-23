@@ -93,6 +93,7 @@ public class Main {
             switch (eleccion()){
                 case "1":
                     g = nuevaPartida();
+                    g.nuevoDia(semillas);
                     salir = true;
                     break;
                 case "2":
@@ -106,7 +107,6 @@ public class Main {
 
         salir = false;
 
-        g.nuevoDia(semillas);
         do{
 
             menuFuncionalidades();

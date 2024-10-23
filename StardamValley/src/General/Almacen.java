@@ -43,7 +43,7 @@ public class Almacen implements Serializable {
             Map.Entry<Semilla, Integer> entry = iter.next();
 
             cont += entry.getKey().getPrecioVenta() * entry.getValue();
-            
+
             iter.remove();
         }
 

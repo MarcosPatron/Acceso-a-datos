@@ -110,31 +110,7 @@ public class Huerto {
                         //numFrutos[i] += (int)Math.floor(Math.random() * semColumnas[i].getMaxFrutos() + 1);
                         //g.getAlmacen().getFrutos().put(semColumnas[i], numFrutos[i]);
                     }
-
-                    /*
-                    idAux = String.valueOf(raf.readInt()); // 4 | 13
-                    raf.writeBoolean(true); // 5 | 14
-                    raf.seek(raf.getFilePointer() - (Integer.BYTES + 1)); // 0 | 9
-
-                    for (int k = 0; k < semillas.get(estacion).size() && !enc; k++) {
-                        if(idAux.equals(semillas.get(estacion).get(k).getId())){ // pregunta
-                            if(semillas.get(estacion).get(k).getDiasCrecimiento() == raf.readInt()){ // 4 | 13
-
-                                // Cuidado con el mov hacia atras
-                                raf.seek(raf.getFilePointer() - Integer.BYTES); // 0 | 9
-                                raf.writeInt(-1); // 4 | 13
-                                raf.writeBoolean(false); // 5 | 14
-                                raf.writeInt(-1);// 9 | 18
-                                g.getAlmacen().getFrutos().put(semillas.get(estacion).get(k),
-                                        (int)Math.floor(Math.random()*semillas.get(estacion).get(k).getMaxFrutos()+1));
-                            }
-                            else{
-                                raf.seek(raf.getFilePointer() + (Integer.BYTES + 1));
-                            }
-                        }
-                    }
-
-                     */
+                    raf.seek(raf.getFilePointer() + Constantes.TAM_HUERTO_BYTES);
                 }
             }
 
@@ -161,14 +137,17 @@ public class Huerto {
 
             raf.seek((long) Constantes.TAM_HUERTO_BYTES * (col-1));
 
-            for (int i = 0; i < filas; i++) {
+            if(semilla != null){
+                for (int i = 0; i < filas; i++) {
 
-                raf.writeInt(parseInt(semilla.getId()));
-                raf.writeBoolean(false);
-                raf.writeInt(1);
+                    raf.writeInt(parseInt(semilla.getId()));
+                    raf.writeBoolean(false);
+                    raf.writeInt(1);
 
-                raf.seek(raf.getFilePointer() + Constantes.TAM_HUERTO_BYTES * (filas - 1));
+                    raf.seek(raf.getFilePointer() + Constantes.TAM_HUERTO_BYTES * (filas - 1));
+                }
             }
+
 
         }catch (Exception e) {
             throw new RuntimeException(e);
@@ -191,13 +170,17 @@ public class Huerto {
 
             for (int i = 0; i < filas; i++) {
                 for (int j = 0; j < columnas; j++) {
-                    raf.seek(Integer.BYTES);// 4 | 13
+                    raf.seek(Integer.BYTES);// 4
                     //raf.seek(filas * Constantes.TAM_HUERTO_BYTES * (columnas + 1) + Integer.BYTES);
                     if(raf.readBoolean()) { // 5 | 14
                         aux = raf.readInt(); // 9 | 18
                         raf.seek(raf.getFilePointer() - Integer.BYTES); // 5 | 14
                         raf.writeInt(aux + 1); // 9 | 18
                     }
+                    else{
+                        raf.seek(raf.getFilePointer() + Integer.BYTES); // 9
+                    }
+                    raf.seek(raf.getFilePointer() + Constantes.TAM_HUERTO_BYTES);
                 }
             }
         } catch (Exception e) {

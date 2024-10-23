@@ -1,6 +1,8 @@
 package General;
 
-public class Semilla {
+import java.io.Serializable;
+
+public class Semilla implements Serializable {
 
     private String id;
     private String nombre;
