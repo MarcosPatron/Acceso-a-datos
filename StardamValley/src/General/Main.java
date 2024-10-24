@@ -22,7 +22,7 @@ public class Main {
             sal = ent.nextLine();
         } catch (InputMismatchException e) {
             sal = "";
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error al introducir valores por pantalla.", e);
         }
         return sal;
     }
@@ -110,7 +110,7 @@ public class Main {
                     Huerto.mostrarHuerto();
                     break;
                 case "2":
-                    Huerto.atendercCultivos(semillas, g);
+                    Huerto.atenderCultivos(semillas, g);
                     Huerto.mostrarHuerto();
                     break;
                 case "3":

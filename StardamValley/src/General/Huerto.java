@@ -3,6 +3,7 @@ package General;
 import Utils.Constantes;
 import Utils.PropertiesF;
 
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Map;
@@ -11,13 +12,19 @@ import static java.lang.Integer.parseInt;
 
 public class Huerto {
 
+    /**
+     * Crea un nuevo huerto inicializando un archivo de acceso aleatorio
+     * con las dimensiones definidas por las propiedades del sistema.
+     *
+     * @throws RuntimeException si ocurre alguna excepción al manipular el archivo
+     *         o las propiedades no están definidas correctamente.
+     */
     public static void crearHuerto() {
 
         PropertiesF.eliminarFichero(Constantes.HUERTO);
         PropertiesF.crearFichero(Constantes.HUERTO);
 
         int filas, columnas;
-
 
         try {
             RandomAccessFile raf = new RandomAccessFile(Constantes.HUERTO, "rw");
@@ -32,11 +39,17 @@ public class Huerto {
                     raf.writeInt(-1);
                 }
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException("Error al crear el huerto." ,e);
         }
     }
 
+    /**
+     * Muestra el huerto ya definido en el archivo de acceso aleatorio.
+     *
+     * @throws RuntimeException si ocurre alguna excepción al manipular el archivo
+     *         o las propiedades no están definidas correctamente.
+     */
     public static void mostrarHuerto() {
 
         int filas, columnas;
@@ -54,12 +67,12 @@ public class Huerto {
                 System.out.println();
             }
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException("Error al mostrar el huerto.", e);
         }
     }
 
-    public static void atendercCultivos(Map<String, ArrayList<Semilla>> semillas, Granja g){
+    public static void atenderCultivos(Map<String, ArrayList<Semilla>> semillas, Granja g){
 
         int filas, columnas;
         String estacion;
@@ -111,8 +124,8 @@ public class Huerto {
 
 
             System.out.println("Se han atendido los cultivos.");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException("Error al atender los cultivos.", e);
         }
     }
 
@@ -159,8 +172,8 @@ public class Huerto {
                     raf.seek(raf.getFilePointer() + Constantes.TAM_HUERTO_BYTES * (filas - 1));
                 }
             }
-        }catch (Exception e) {
-            throw new RuntimeException(e);
+        }catch (IOException e) {
+            throw new RuntimeException("Error al plantar las semillas en el huerto.", e);
         }
     }
 
@@ -191,8 +204,8 @@ public class Huerto {
                     raf.seek(raf.getFilePointer() + Constantes.TAM_HUERTO_BYTES);
                 }
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException("Error al iniciar un nuevo dia en el huerto.", e);
         }
     }
 }

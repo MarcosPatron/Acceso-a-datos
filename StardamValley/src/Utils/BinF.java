@@ -2,10 +2,7 @@ package Utils;
 
 import General.Granja;
 
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,7 +21,7 @@ public class BinF {
             g = (Granja) ois.readObject();
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error al cargar la granja guardada en el programa.", e);
         }
         return g;
     }
@@ -39,8 +36,8 @@ public class BinF {
 
             oos.writeObject(g);
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException("Error al guardar la partida.", e);
         }
     }
 

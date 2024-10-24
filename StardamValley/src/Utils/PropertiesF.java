@@ -29,7 +29,7 @@ public class PropertiesF {
             valor = propiedades.getProperty(nombre);
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error al tomar un valor del archivo properties.", e);
         }
         return valor;
     }
@@ -54,7 +54,7 @@ public class PropertiesF {
             Files.delete(path);
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error al crear un fichero.", e);
         }
     }
 
@@ -77,8 +77,8 @@ public class PropertiesF {
             propiedades.store(salida, "Archivo de configuración presonalizado.");
             salida.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException("Error al inicializar el archivo properties de forma predeterminada.", e);
         }
     }
 
@@ -119,8 +119,8 @@ public class PropertiesF {
             propiedades.store(salida, "Archivo de configuración presonalizado.");
             salida.close();
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException("Error al inicializar el archivo properties.", e);
         }
     }
 
@@ -141,7 +141,7 @@ public class PropertiesF {
 
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error al cargar una nueva granja.", e);
         }
 
         return new Granja(presupuesto, estacion);

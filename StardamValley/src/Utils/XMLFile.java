@@ -47,22 +47,20 @@ public class XMLFile {
                     int precioVenta = Integer.parseInt(semilla.getElementsByTagName("precioVentaFruto").item(0).getTextContent());
                     int maxFrutos = Integer.parseInt(semilla.getElementsByTagName("maxFrutos").item(0).getTextContent());
 
-                    for (int j = 0; j < estacion.length; j++) {
-
-                        String aux = estacion[j];
+                    for (String aux : estacion) {
 
                         switch (aux) {
                             case "Primavera":
-                                primavera.add(new Semilla(id, nombre, estacion[j], diasCrecimiento, precioCompra, precioVenta, maxFrutos));
+                                primavera.add(new Semilla(id, nombre, aux, diasCrecimiento, precioCompra, precioVenta, maxFrutos));
                                 break;
                             case "Verano":
-                                verano.add(new Semilla(id, nombre, estacion[j], diasCrecimiento, precioCompra, precioVenta, maxFrutos));
+                                verano.add(new Semilla(id, nombre, aux, diasCrecimiento, precioCompra, precioVenta, maxFrutos));
                                 break;
                             case "Otoño":
-                                otono.add(new Semilla(id, nombre, estacion[j], diasCrecimiento, precioCompra, precioVenta, maxFrutos));
+                                otono.add(new Semilla(id, nombre, aux, diasCrecimiento, precioCompra, precioVenta, maxFrutos));
                                 break;
                             case "Invierno":
-                                invierno.add(new Semilla(id, nombre, estacion[j], diasCrecimiento, precioCompra, precioVenta, maxFrutos));
+                                invierno.add(new Semilla(id, nombre, aux, diasCrecimiento, precioCompra, precioVenta, maxFrutos));
                                 break;
                             default:
                                 System.out.println("Semilla ");
@@ -77,7 +75,7 @@ public class XMLFile {
             semillas.put("Invierno", invierno);
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error al cargar las semillas desde el fichero XML.", e);
         }
     }
 }
