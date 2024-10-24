@@ -114,10 +114,13 @@ public class Huerto {
             for (int i = 0; i < filas; i++) {
                 for (int j = 0; j < columnas; j++) {
                     raf.seek((i * (columnas) + j) * Constantes.TAM_HUERTO_BYTES);
-                    if(raf.readInt() != -1) {
-                        raf.writeBoolean(true);
+                    if(raf.readInt() != -1) { //4
+                        raf.writeBoolean(true); //5
                     }
-                    aux = raf.readInt();
+                    else{
+                        raf.seek(raf.getFilePointer() + 1); //5
+                    }
+                    aux = raf.readInt(); //9
                     if(semColumnas[i] != null && semColumnas[i].getDiasCrecimiento() == aux){
                         raf.seek(raf.getFilePointer() - Constantes.TAM_HUERTO_BYTES); //OJOOOOOOOOOOOOO
                         raf.writeInt(-1);
