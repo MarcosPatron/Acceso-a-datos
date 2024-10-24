@@ -3,11 +3,9 @@ package General;
 import Utils.Constantes;
 import Utils.PropertiesF;
 
-import java.io.FileInputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Properties;
 
 import static java.lang.Integer.parseInt;
 
@@ -32,7 +30,6 @@ public class Huerto {
                     raf.writeInt(-1);
                     raf.writeBoolean(false);
                     raf.writeInt(-1);
-
                 }
             }
         } catch (Exception e) {
@@ -74,13 +71,11 @@ public class Huerto {
             String idAux;
             int aux;
 
-
             estacion = PropertiesF.tomarValor("estacion");
             filas = parseInt(PropertiesF.tomarValor("filas"));
             columnas = parseInt(PropertiesF.tomarValor("columnas"));
 
             Semilla[] semColumnas = new Semilla[filas];
-            int[] numFrutos = new int[filas];
 
             //Tomo las semillas que estan plantadas en cada fila
             for (int i = 0; i < filas; i++) {
@@ -90,7 +85,6 @@ public class Huerto {
                 for (int j = 0; j < semillas.get(estacion).size() && !enc; j++) {
                     if(idAux.equals(semillas.get(estacion).get(j).getId())) {
                         semColumnas[i] = semillas.get(estacion).get(j);
-                        //numFrutos[i] = g.getAlmacen().getFrutos().get(semColumnas[i]);
                         enc = true;
                     }
                 }
@@ -99,25 +93,43 @@ public class Huerto {
             raf.seek(0);
             for (int i = 0; i < filas; i++) {
                 for (int j = 0; j < columnas; j++) {
-                    raf.seek(Integer.BYTES); // 4 | 13
-                    raf.writeBoolean(true); // 5 | 14
-                    aux = raf.readInt(); // 9
+                    raf.seek((i * columnas + j) * Constantes.TAM_HUERTO_BYTES);
+                    raf.seek(raf.getFilePointer() + Integer.BYTES);
+                    raf.writeBoolean(true);
+                    aux = raf.readInt();
                     if(semColumnas[i] != null && semColumnas[i].getDiasCrecimiento() == aux){
                         raf.seek(raf.getFilePointer() - Constantes.TAM_HUERTO_BYTES); // 0
                         raf.writeInt(-1);
                         raf.writeBoolean(false);
-                        raf.writeInt(-1); // 9
-                        //numFrutos[i] += (int)Math.floor(Math.random() * semColumnas[i].getMaxFrutos() + 1);
-                        //g.getAlmacen().getFrutos().put(semColumnas[i], numFrutos[i]);
+                        raf.writeInt(-1);
+
+                        cultivarHuerto(g, semColumnas[i]);
                     }
                     raf.seek(raf.getFilePointer() + Constantes.TAM_HUERTO_BYTES);
                 }
             }
 
+
             System.out.println("Se han atendido los cultivos.");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void cultivarHuerto(Granja g, Semilla s){
+
+        int cont;
+
+        if(g.getAlmacen().getFrutos().get(s) != null){
+           cont =  g.getAlmacen().getFrutos().get(s);
+        }
+        else{
+            cont = 0;
+        }
+
+        cont += (int)Math.floor(Math.random() * s.getMaxFrutos() + 1);
+
+        g.getAlmacen().getFrutos().put(s, cont);
     }
 
     public static void plantarSemillaColumna(Semilla semilla, int col){
@@ -147,8 +159,6 @@ public class Huerto {
                     raf.seek(raf.getFilePointer() + Constantes.TAM_HUERTO_BYTES * (filas - 1));
                 }
             }
-
-
         }catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -163,22 +173,20 @@ public class Huerto {
 
             filas = parseInt(PropertiesF.tomarValor("filas"));
             columnas = parseInt(PropertiesF.tomarValor("columnas"));
-
             int aux;
-
-
 
             for (int i = 0; i < filas; i++) {
                 for (int j = 0; j < columnas; j++) {
-                    raf.seek(Integer.BYTES);// 4
-                    //raf.seek(filas * Constantes.TAM_HUERTO_BYTES * (columnas + 1) + Integer.BYTES);
-                    if(raf.readBoolean()) { // 5 | 14
-                        aux = raf.readInt(); // 9 | 18
-                        raf.seek(raf.getFilePointer() - Integer.BYTES); // 5 | 14
-                        raf.writeInt(aux + 1); // 9 | 18
+                    raf.seek((i * columnas + j) * Constantes.TAM_HUERTO_BYTES);
+                    if(raf.readInt() != -1 && raf.readBoolean()) {
+                        raf.seek(raf.getFilePointer() - 1);
+                        raf.writeBoolean(false);
+                        aux = raf.readInt();
+                        raf.seek(raf.getFilePointer() - Integer.BYTES);
+                        raf.writeInt(aux + 1);
                     }
                     else{
-                        raf.seek(raf.getFilePointer() + Integer.BYTES); // 9
+                        raf.writeBoolean(false);
                     }
                     raf.seek(raf.getFilePointer() + Constantes.TAM_HUERTO_BYTES);
                 }
@@ -187,7 +195,6 @@ public class Huerto {
             throw new RuntimeException(e);
         }
     }
-
 }
 
 

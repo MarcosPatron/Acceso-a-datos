@@ -16,8 +16,8 @@ public class BinF {
 
         Path path = Paths.get(Constantes.STARDAM_VALLEY);
         Granja g;
-        try{
 
+        try{
             InputStream fis = Files.newInputStream(path);
             ObjectInputStream ois = new ObjectInputStream(fis);
 
@@ -34,12 +34,10 @@ public class BinF {
         Path path = Paths.get(Constantes.STARDAM_VALLEY);
 
         try{
-
             OutputStream fos = Files.newOutputStream(path);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
             oos.writeObject(g);
-
 
         } catch (Exception e) {
             throw new RuntimeException(e);

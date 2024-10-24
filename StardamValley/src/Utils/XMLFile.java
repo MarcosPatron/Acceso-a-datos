@@ -27,28 +27,21 @@ public class XMLFile {
             ArrayList<Semilla> otono = new ArrayList<>();
             ArrayList<Semilla> invierno = new ArrayList<>();
 
-            // Normalizamos el archivo XML
             doc.getDocumentElement().normalize();
 
-            // Obtenemos todos los elementos "semilla" (elemento complejo)
             NodeList sem= doc.getElementsByTagName("semilla");
 
-
-            // Procesamos cada uno de los semilla
             for (int i = 0; i < sem.getLength(); i++) {
-                // Recuperamos el nodo en la posicion i
                 Node nodoSemilla = sem.item(i);
                 nodoSemilla.getAttributes();
 
-                // Nos aseguramos que el nodo es un elemento (y no es, por ejemplo, un comentario)
                 if (nodoSemilla.getNodeType() == Node.ELEMENT_NODE) {
-                    // Convertimos el nodo a Element para poder procesarlo
                     Element semilla = (Element) nodoSemilla;
 
-                    // Recuperamos los elementos simple
                     String id = semilla.getAttribute("id");;
                     String nombre = semilla.getElementsByTagName("nombre").item(0).getTextContent();
                     String[] estacion = (semilla.getElementsByTagName("estacion").item(0).getTextContent()).split("-") ;
+
                     int diasCrecimiento = Integer.parseInt(semilla.getElementsByTagName("diasCrecimiento").item(0).getTextContent());
                     int precioCompra= Integer.parseInt(semilla.getElementsByTagName("precioCompraSemilla").item(0).getTextContent());
                     int precioVenta = Integer.parseInt(semilla.getElementsByTagName("precioVentaFruto").item(0).getTextContent());

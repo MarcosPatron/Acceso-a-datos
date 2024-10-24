@@ -2,7 +2,6 @@ package General;
 
 import Utils.*;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,13 +19,11 @@ public class Main {
         String sal;
 
         try{
-
             sal = ent.nextLine();
         } catch (InputMismatchException e) {
             sal = "";
             throw new RuntimeException(e);
         }
-
         return sal;
     }
 
@@ -87,9 +84,7 @@ public class Main {
         Granja g = new Granja(1000, Estaciones.Primavera);
 
         do{
-
             menuInicio();
-
             switch (eleccion()){
                 case "1":
                     g = nuevaPartida();
@@ -108,7 +103,6 @@ public class Main {
         salir = false;
 
         do{
-
             menuFuncionalidades();
             switch (eleccion()) {
                 case "1":
@@ -141,7 +135,6 @@ public class Main {
                 default:
                     System.out.println("ERROR. Esa elección no existe.");
             }
-
         }while(!salir);
         BinF.guardarPartida(g);
     }

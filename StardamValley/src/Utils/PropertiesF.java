@@ -120,7 +120,7 @@ public class PropertiesF {
             salida.close();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
