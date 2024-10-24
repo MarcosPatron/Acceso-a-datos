@@ -13,6 +13,11 @@ import static java.lang.Integer.parseInt;
 public class Main {
 
 
+    /**
+     * Pide al usuario un valor por pantalla
+     *
+     * @return La cadena de texto que ha introducido el usuario.
+     */
     public static String eleccion(){
 
         Scanner ent = new Scanner(System.in);
@@ -27,6 +32,9 @@ public class Main {
         return sal;
     }
 
+    /**
+     * Muestra el menu de inicio del juego.
+     */
     public static void menuInicio(){
 
         Path path = Paths.get(Constantes.STARDAM_VALLEY);
@@ -40,6 +48,9 @@ public class Main {
         }
     }
 
+    /**
+     * Muestra el manu de las funcionalidades del juego.
+     */
     public static void menuFuncionalidades(){
         System.out.println("STARDAM VALLEY" +
                 "\n---------------------------------------" +
@@ -51,6 +62,11 @@ public class Main {
                 "\n6. SALIR");
     }
 
+    /**
+     * Inicializa la granja con la características de nuestra nueva partida.
+     *
+     * @return La granja ya inicializada
+     */
     public static Granja nuevaPartida(){
 
         String resp;

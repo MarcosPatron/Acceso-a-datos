@@ -26,6 +26,11 @@ public class Tienda implements Serializable {
         this.tienda = tienda;
     }
 
+    /**
+     * Añade la semillas a la tienda
+     *
+     * @param semillas Lista de semillas
+     */
     public void nuevasSemillas(ArrayList<Semilla> semillas) {
 
         Random random = new Random();
@@ -50,6 +55,10 @@ public class Tienda implements Serializable {
         setTienda(s);
     }
 
+    /**
+     * Muestra la informacion de la tienda
+     *
+     */
     public void mostrarTienda(){
 
         for (Semilla semilla : getTienda()) {
@@ -57,6 +66,13 @@ public class Tienda implements Serializable {
         }
     }
 
+    /**
+     * Toma la semilla que se va a introducir en el huerto.
+     *
+     * @param g Nuestra granja
+     * @param eleccion El nombre de la semilla seleccionada por el usuario.
+     * @return La semilla que se va a plantar en el huerto
+     */
     public Semilla comprarSemillas(Granja g, String eleccion){
 
         int nSemillas = parseInt(PropertiesF.tomarValor("columnas"));

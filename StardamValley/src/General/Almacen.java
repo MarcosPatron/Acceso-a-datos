@@ -26,6 +26,10 @@ public class Almacen implements Serializable {
         this.frutos = frutos;
     }
 
+    /**
+     * Muestra los frutos almacenados en el almacen.
+     *
+     */
     public void mostrarAlmacen(){
 
         for (Map.Entry<Semilla, Integer> frutos : this.frutos.entrySet()) {
@@ -34,6 +38,11 @@ public class Almacen implements Serializable {
         System.out.println();
     }
 
+    /**
+     * Vende los frutos almacenados en la variable frutos
+     *
+     * @return El dinero que se ha adquirido al vender los frutos
+     */
     public int venderCosecha(){
 
         int cont = 0;
@@ -47,6 +56,9 @@ public class Almacen implements Serializable {
             iter.remove();
         }
 
+        if(cont == 0){
+            System.out.println("No hay nada en el almacen para vender.");
+        }
         return cont;
     }
 }

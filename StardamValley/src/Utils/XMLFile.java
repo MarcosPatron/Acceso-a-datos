@@ -15,6 +15,11 @@ import java.util.Map;
 public class XMLFile {
 
 
+    /**
+     * Carga las semillas de el fihero XML
+     *
+     * @param semillas Lista de semillas
+     */
     public static void cargarSemillas(Map<String, ArrayList<Semilla>> semillas){
 
         try {

@@ -1,8 +1,12 @@
 package General;
 
+import Utils.PropertiesF;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Map;
+
+import static java.lang.Integer.parseInt;
 
 public class Granja implements Serializable {
 
@@ -60,6 +64,9 @@ public class Granja implements Serializable {
         this.almacen = almacen;
     }
 
+    /**
+     * Muestra la información de la granaja
+     */
     public void mostrarGranja(){
 
         System.out.print("INFORMACIÓN DE LA GRANJA:" +
@@ -74,10 +81,17 @@ public class Granja implements Serializable {
         Huerto.mostrarHuerto();
     }
 
+    /**
+     * Inicia un nuevo dia en nuestro juego
+     *
+     * @param sem La lista de las semillas disponibles en al juego
+     */
     public void nuevoDia(Map<String, ArrayList<Semilla>> sem){
 
+        int duracion = parseInt(PropertiesF.tomarValor("duracion_estacion"));
+
         setDiaJuego(this.diaJuego + 1);
-        if(this.diaJuego > 30) {
+        if(this.diaJuego > duracion) {
 
             setDiaJuego(1);
 
@@ -95,7 +109,6 @@ public class Granja implements Serializable {
                     setEstacion(Estaciones.Primavera);
                     break;
             }
-            Huerto.crearHuerto();
         }
         else{
             Huerto.nuevoDiaHuerto();

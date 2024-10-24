@@ -9,6 +9,11 @@ import java.nio.file.Paths;
 
 public class BinF {
 
+    /**
+     * Carga la granja y la inicializa en el programa.
+     *
+     * @return La granja guardada en la ultima sesión.
+     */
     public static Granja cargarGranja(){
 
         Path path = Paths.get(Constantes.STARDAM_VALLEY);
@@ -26,6 +31,11 @@ public class BinF {
         return g;
     }
 
+    /**
+     * Guarda en el fichero la granja introducida por parametros.
+     *
+     * @param g Nuestra granja.
+     */
     public static void guardarPartida(Granja g){
 
         Path path = Paths.get(Constantes.STARDAM_VALLEY);

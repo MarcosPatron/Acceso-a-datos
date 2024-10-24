@@ -72,6 +72,13 @@ public class Huerto {
         }
     }
 
+    /**
+     * Pone riega el huerto poniendo los valores booleanos introducidos en el RAF a true, y si hay algun fruto que se
+     * puede recolectar lo hace, poniendo los valores del huerto como si no estubiese plantado.
+     *
+     * @throws RuntimeException si ocurre alguna excepción al manipular el archivo
+     *         o las propiedades no están definidas correctamente.
+     */
     public static void atenderCultivos(Map<String, ArrayList<Semilla>> semillas, Granja g){
 
         int filas, columnas;
@@ -106,12 +113,13 @@ public class Huerto {
             raf.seek(0);
             for (int i = 0; i < filas; i++) {
                 for (int j = 0; j < columnas; j++) {
-                    raf.seek((i * columnas + j) * Constantes.TAM_HUERTO_BYTES);
-                    raf.seek(raf.getFilePointer() + Integer.BYTES);
-                    raf.writeBoolean(true);
+                    raf.seek((i * (columnas) + j) * Constantes.TAM_HUERTO_BYTES);
+                    if(raf.readInt() != -1) {
+                        raf.writeBoolean(true);
+                    }
                     aux = raf.readInt();
                     if(semColumnas[i] != null && semColumnas[i].getDiasCrecimiento() == aux){
-                        raf.seek(raf.getFilePointer() - Constantes.TAM_HUERTO_BYTES); // 0
+                        raf.seek(raf.getFilePointer() - Constantes.TAM_HUERTO_BYTES); //OJOOOOOOOOOOOOO
                         raf.writeInt(-1);
                         raf.writeBoolean(false);
                         raf.writeInt(-1);
@@ -129,6 +137,9 @@ public class Huerto {
         }
     }
 
+    /**
+     * Cultiva la semilla dada y la introduce en el almacen.
+     */
     public static void cultivarHuerto(Granja g, Semilla s){
 
         int cont;
@@ -145,9 +156,15 @@ public class Huerto {
         g.getAlmacen().getFrutos().put(s, cont);
     }
 
+    /**
+     * Planta las semilla introducida rellenando la columna seleccionada
+     *
+     * @throws RuntimeException si ocurre alguna excepción al manipular el archivo
+     *         o las propiedades no están definidas correctamente.
+     */
     public static void plantarSemillaColumna(Semilla semilla, int col){
 
-        int filas;
+        int filas, columnas;
 
         try {
             RandomAccessFile raf = new RandomAccessFile(Constantes.HUERTO, "rw");
@@ -159,17 +176,18 @@ public class Huerto {
             }
 
             filas = parseInt(PropertiesF.tomarValor("filas"));
+            columnas = parseInt(PropertiesF.tomarValor("columnas"));
 
-            raf.seek((long) Constantes.TAM_HUERTO_BYTES * (col-1));
+            raf.seek((long) Constantes.TAM_HUERTO_BYTES * (col-1)); // 9
 
             if(semilla != null){
                 for (int i = 0; i < filas; i++) {
 
-                    raf.writeInt(parseInt(semilla.getId()));
-                    raf.writeBoolean(false);
-                    raf.writeInt(1);
+                    raf.writeInt(parseInt(semilla.getId())); //13
+                    raf.writeBoolean(false); //14
+                    raf.writeInt(1); // 18
 
-                    raf.seek(raf.getFilePointer() + Constantes.TAM_HUERTO_BYTES * (filas - 1));
+                    raf.seek(raf.getFilePointer() + Constantes.TAM_HUERTO_BYTES * (columnas - 1)); //
                 }
             }
         }catch (IOException e) {
@@ -177,6 +195,13 @@ public class Huerto {
         }
     }
 
+    /**
+     * Pone a false el booleano que indica si el huerto ha sido regado, y si lo ha sido
+     * y hay una semilla plantada, aumenta los dias que lleva de crecimiento.
+     *
+     * @throws RuntimeException si ocurre alguna excepción al manipular el archivo
+     *         o las propiedades no están definidas correctamente.
+     */
     public static void nuevoDiaHuerto(){
 
         int filas, columnas;

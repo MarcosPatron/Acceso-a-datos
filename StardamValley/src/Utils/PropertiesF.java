@@ -12,8 +12,17 @@ import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
+
 public class PropertiesF {
 
+    /**
+     * Nos devuelve el valor del atributo del fichero properties que le
+     * hemos pasado por parametros.
+     *
+     * @param nombre El nombre del elemento en el fichero properties que
+     *               queremos seleccionar.
+     * @return El valor del fichero properties.
+     */
     public static String tomarValor(String nombre){
 
         String valor;
@@ -34,6 +43,11 @@ public class PropertiesF {
         return valor;
     }
 
+    /**
+     * Crea un fichero de nombre igual al introducido por paramtros.
+     *
+     * @param nombreFichero nombre del fichero a crear.
+     */
     public static void crearFichero(String nombreFichero) {
         Path path = Paths.get(nombreFichero);
 
@@ -46,6 +60,11 @@ public class PropertiesF {
         }
     }
 
+    /**
+     * Elimina el fichero de de nombre igual al introducido por paramtros.
+     *
+     * @param nombreFichero nombre del fichero a eliminar.
+     */
     public static void eliminarFichero(String nombreFichero) {
 
         Path path = Paths.get(nombreFichero);
@@ -54,10 +73,13 @@ public class PropertiesF {
             Files.delete(path);
 
         } catch (Exception e) {
-            throw new RuntimeException("Error al crear un fichero.", e);
+            throw new RuntimeException("Error al eliminar un fichero.", e);
         }
     }
 
+    /**
+     * Inicializa el fichero personalized_properties con valores por defecto.
+     */
     public static void inicializarPropiedades(){
 
         Properties propiedades = new Properties();
@@ -71,7 +93,7 @@ public class PropertiesF {
             propiedades.setProperty("columnas", "4");
             propiedades.setProperty("presupuesto", "1000");
             propiedades.setProperty("estacion", "Primavera");
-            propiedades.setProperty("duracion_esacion", "30");
+            propiedades.setProperty("duracion_estacion", "30");
 
             FileOutputStream salida = new FileOutputStream(Constantes.PERSOMNALIZED_PROPERTIES);
             propiedades.store(salida, "Archivo de configuración presonalizado.");
@@ -82,6 +104,9 @@ public class PropertiesF {
         }
     }
 
+    /**
+     * Inicializa el fichero personalized_properties con valores dados.
+     */
     public static void setPropiedades(){
 
         Scanner ent = new Scanner(System.in);
@@ -96,7 +121,7 @@ public class PropertiesF {
         System.out.println("Dame el presupuesto: ");
         presupuesto = ent.nextLine();
 
-        System.out.println("Dame la estaición inicial: ");
+        System.out.println("Dame la estación inicial: ");
         estacion =  ent.nextLine();
 
         System.out.println("Dame la duración de la estación: ");
@@ -113,7 +138,7 @@ public class PropertiesF {
             propiedades.setProperty("columnas", columnas);
             propiedades.setProperty("presupuesto", presupuesto);
             propiedades.setProperty("estacion", estacion);
-            propiedades.setProperty("duracion_esacion", duracion_estacion);
+            propiedades.setProperty("duracion_estacion", duracion_estacion);
 
             FileOutputStream salida = new FileOutputStream(Constantes.PERSOMNALIZED_PROPERTIES);
             propiedades.store(salida, "Archivo de configuración presonalizado.");
@@ -124,6 +149,11 @@ public class PropertiesF {
         }
     }
 
+    /**
+     * Inicializa un nueva granja con los valores del fichero personalized_properties
+     *
+     * @return La granja ya inicilizada.
+     */
     public static Granja nuevaGranja() {
 
         Properties propiedades = new Properties();
