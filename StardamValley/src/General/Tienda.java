@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static General.Main.eleccion;
 import static java.lang.Integer.parseInt;
 
 public class Tienda implements Serializable {

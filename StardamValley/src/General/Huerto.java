@@ -111,15 +111,15 @@ public class Huerto {
             for (int i = 0; i < filas; i++) {
                 for (int j = 0; j < columnas; j++) {
                     raf.seek((i * (columnas) + j) * Constantes.TAM_HUERTO_BYTES);
-                    if(raf.readInt() != -1) { //4
-                        raf.writeBoolean(true); //5
+                    if(raf.readInt() != -1) {
+                        raf.writeBoolean(true);
                     }
                     else{
-                        raf.seek(raf.getFilePointer() + 1); //5
+                        raf.seek(raf.getFilePointer() + 1);
                     }
                     aux = raf.readInt(); //9
                     if(semColumnas[j] != null && semColumnas[j].getDiasCrecimiento() == aux){
-                        raf.seek(raf.getFilePointer() - Constantes.TAM_HUERTO_BYTES); //OJOOOOOOOOOOOOO
+                        raf.seek(raf.getFilePointer() - Constantes.TAM_HUERTO_BYTES);
                         raf.writeInt(-1);
                         raf.writeBoolean(false);
                         raf.writeInt(-1);
@@ -178,16 +178,16 @@ public class Huerto {
             filas = parseInt(PropertiesF.tomarValor("filas"));
             columnas = parseInt(PropertiesF.tomarValor("columnas"));
 
-            raf.seek((long) Constantes.TAM_HUERTO_BYTES * (col-1)); // 9
+            raf.seek((long) Constantes.TAM_HUERTO_BYTES * (col-1));
 
             if(semilla != null){
                 for (int i = 0; i < filas; i++) {
 
-                    raf.writeInt(parseInt(semilla.getId())); //13
-                    raf.writeBoolean(false); //14
-                    raf.writeInt(1); // 18
+                    raf.writeInt(parseInt(semilla.getId()));
+                    raf.writeBoolean(false);
+                    raf.writeInt(1);
 
-                    raf.seek(raf.getFilePointer() + Constantes.TAM_HUERTO_BYTES * (columnas - 1)); //
+                    raf.seek(raf.getFilePointer() + Constantes.TAM_HUERTO_BYTES * (columnas - 1));
                 }
             }
         }catch (IOException e) {
