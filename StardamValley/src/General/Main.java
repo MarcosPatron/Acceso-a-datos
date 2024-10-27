@@ -95,9 +95,8 @@ public class Main {
         Boolean salir = false;
 
         XMLFile.cargarSemillas(semillas);
-        PropertiesF.inicializarPropiedades();
 
-        Granja g = new Granja(1000, Estaciones.Primavera);
+        Granja g = null;
 
         do{
             menuInicio();

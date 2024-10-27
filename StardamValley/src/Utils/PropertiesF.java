@@ -110,22 +110,35 @@ public class PropertiesF {
     public static void setPropiedades(){
 
         Scanner ent = new Scanner(System.in);
-        String filas = "4", columnas = "4", presupuesto = "1000", estacion = "PRIMAVERA", duracion_estacion = "30";
+        String filas, columnas, presupuesto, estacion, duracion_estacion;
 
         System.out.println("Dame el número de filas: ");
         filas = ent.nextLine();
+        // Compruebo si el número introducido por el usuario es entero y posistivo
+        if(filas == null || !filas.matches("\\d+")){
+            filas = "4";
+        }
 
         System.out.println("Dame el número de columnas: ");
         columnas = ent.nextLine();
+        if(columnas == null || !columnas.matches("\\d+")){
+            columnas = "4";
+        }
 
         System.out.println("Dame el presupuesto: ");
         presupuesto = ent.nextLine();
+        if(presupuesto == null || !presupuesto.matches("\\d+")){
+            presupuesto = "1000";
+        }
 
         System.out.println("Dame la estación inicial: ");
         estacion =  ent.nextLine();
 
         System.out.println("Dame la duración de la estación: ");
         duracion_estacion =  ent.nextLine();
+        if(duracion_estacion == null || !duracion_estacion.matches("\\d+")){
+            duracion_estacion = "4";
+        }
 
         Properties propiedades = new Properties();
 
@@ -168,12 +181,9 @@ public class PropertiesF {
             presupuesto = parseInt(propiedades.getProperty("presupuesto"));
             estacion = Estaciones.valueOf(propiedades.getProperty("estacion"));
 
-
-
         } catch (IOException e) {
             throw new RuntimeException("Error al cargar una nueva granja.", e);
         }
-
         return new Granja(presupuesto, estacion);
     }
 

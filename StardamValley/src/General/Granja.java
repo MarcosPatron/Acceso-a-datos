@@ -109,6 +109,7 @@ public class Granja implements Serializable {
                     setEstacion(Estaciones.Primavera);
                     break;
             }
+            Huerto.crearHuerto();
         }
         else{
             Huerto.nuevoDiaHuerto();

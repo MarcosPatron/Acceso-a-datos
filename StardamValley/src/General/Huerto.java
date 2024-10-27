@@ -21,9 +21,6 @@ public class Huerto {
      */
     public static void crearHuerto() {
 
-        PropertiesF.eliminarFichero(Constantes.HUERTO);
-        PropertiesF.crearFichero(Constantes.HUERTO);
-
         int filas, columnas;
 
         try {
@@ -95,7 +92,7 @@ public class Huerto {
             filas = parseInt(PropertiesF.tomarValor("filas"));
             columnas = parseInt(PropertiesF.tomarValor("columnas"));
 
-            Semilla[] semColumnas = new Semilla[filas];
+            Semilla[] semColumnas = new Semilla[columnas];
 
             //Tomo las semillas que estan plantadas en cada fila
             for (int i = 0; i < filas; i++) {
@@ -121,13 +118,13 @@ public class Huerto {
                         raf.seek(raf.getFilePointer() + 1); //5
                     }
                     aux = raf.readInt(); //9
-                    if(semColumnas[i] != null && semColumnas[i].getDiasCrecimiento() == aux){
+                    if(semColumnas[j] != null && semColumnas[j].getDiasCrecimiento() == aux){
                         raf.seek(raf.getFilePointer() - Constantes.TAM_HUERTO_BYTES); //OJOOOOOOOOOOOOO
                         raf.writeInt(-1);
                         raf.writeBoolean(false);
                         raf.writeInt(-1);
 
-                        cultivarHuerto(g, semColumnas[i]);
+                        cultivarHuerto(g, semColumnas[j]);
                     }
                     raf.seek(raf.getFilePointer() + Constantes.TAM_HUERTO_BYTES);
                 }
