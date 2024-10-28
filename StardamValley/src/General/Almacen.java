@@ -59,6 +59,7 @@ public class Almacen implements Serializable {
         if(cont == 0){
             System.out.println("No hay nada en el almacen para vender.");
         }
+        System.out.println("Se ha vendido la cosecha.");
         return cont;
     }
 }
