@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class Producto {
 
@@ -67,29 +64,78 @@ public class Producto {
         this.nombreFabicante = nombreFabicante;
     }
 
-    public static void establecerConexion(){
+    public static void mostrarTienda(){
+
+        GestionDB.getInstance();
 
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/tienda";
-            Connection conn = DriverManager.getConnection(url, "root", "root");
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void anadirDB(){
-
-
-        try{
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM producto");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM producto");
             ResultSet rs = stmt.executeQuery();
 
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                double precio = rs.getDouble("precio");
+                System.out.println("Producto " + id + " --> Nombre: " + nombre + ". Precio: " + precio);
+            }
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
+    public static void mostrarFabicante(){
+        Connection conn = establecerConexion();
+
+        try{
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM fabricante");
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                System.out.println("Producto " + id + " --> Nombre: " + nombre);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void modificarProducto(String nombre, double precio){
+
+        Connection conn = establecerConexion();
+
+        try{
+            String query = "UPDATE producto SET nombre = ? AND precio = ? WHERE  id = 1";
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setString(1, nombre);
+            stmt.setDouble(2, precio);
+
+            int numAct = stmt.executeUpdate();
+            System.out.println("Se han modificado " + numAct + " registros.");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void eliminarProducto(String nombre){
+
+        Connection conn = establecerConexion();
+
+        try {
+            String query = "DELETE FROM producto WHERE nombre = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setString(1, nombre);
+
+            int numAct = stmt.executeUpdate();
+            System.out.println("Se han eliminado " + numAct + " registros.");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
