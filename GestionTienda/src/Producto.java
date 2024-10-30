@@ -1,3 +1,8 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 public class Producto {
 
     private int id;
@@ -61,4 +66,30 @@ public class Producto {
     public void setNombreFabicante(String nombreFabicante) {
         this.nombreFabicante = nombreFabicante;
     }
+
+    public static void establecerConexion(){
+
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306/tienda";
+            Connection conn = DriverManager.getConnection(url, "root", "root");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void anadirDB(){
+
+
+        try{
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM producto");
+            ResultSet rs = stmt.executeQuery();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 }
