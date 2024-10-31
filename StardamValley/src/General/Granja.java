@@ -1,5 +1,7 @@
 package General;
 
+import Huerto.Huerto;
+import Utils.Constants;
 import Utils.PropertiesF;
 
 import java.io.*;
@@ -28,17 +30,11 @@ public class Granja implements Serializable {
         return diaJuego;
     }
 
-    public void setDiaJuego(int diaJuego) {
-        this.diaJuego = diaJuego;
-    }
+    public void setDiaJuego(int diaJuego) { this.diaJuego = diaJuego; }
 
-    public int getDinero() {
-        return dinero;
-    }
+    public int getDinero() { return dinero; }
 
-    public void setDinero(int dinero) {
-        this.dinero = dinero;
-    }
+    public void setDinero(int dinero) { this.dinero = dinero; }
 
     public Estaciones getEstacion() {
         return estacion;
@@ -88,7 +84,7 @@ public class Granja implements Serializable {
      */
     public void nuevoDia(Map<String, ArrayList<Semilla>> sem){
 
-        int duracion = parseInt(PropertiesF.tomarValor("duracion_estacion"));
+        int duracion = parseInt(PropertiesF.tomarValor("duracion_estacion", Constants.PERSOMNALIZED_PROPERTIES));
 
         setDiaJuego(this.diaJuego + 1);
         if(this.diaJuego > duracion) {

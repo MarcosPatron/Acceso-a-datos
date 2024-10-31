@@ -1,4 +1,4 @@
-package General;
+package Huerto;
 
 
 import java.io.Serializable;

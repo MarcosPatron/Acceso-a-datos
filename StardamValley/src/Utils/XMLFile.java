@@ -1,6 +1,6 @@
 package Utils;
 
-import General.Semilla;
+import Huerto.Semilla;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -25,7 +25,7 @@ public class XMLFile {
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(new File(Constantes.SEMILLAS));
+            Document doc = dBuilder.parse(new File(Constants.SEMILLAS));
 
             ArrayList<Semilla> primavera = new ArrayList<>();
             ArrayList<Semilla> verano = new ArrayList<>();

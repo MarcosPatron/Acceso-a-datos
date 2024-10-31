@@ -1,5 +1,7 @@
 package General;
 
+import Huerto.Semilla;
+import Utils.Constants;
 import Utils.PropertiesF;
 
 import java.io.Serializable;
@@ -74,7 +76,7 @@ public class Tienda implements Serializable {
      */
     public Semilla comprarSemillas(Granja g, String eleccion){
 
-        int nSemillas = parseInt(PropertiesF.tomarValor("columnas"));
+        int nSemillas = parseInt(PropertiesF.tomarValor("columnas", Constants.PERSOMNALIZED_PROPERTIES));
         int coste = 0;
         boolean enc = false;
         Semilla aux = null;

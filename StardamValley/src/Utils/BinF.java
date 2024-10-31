@@ -16,7 +16,7 @@ public class BinF {
      */
     public static Granja cargarGranja(){
 
-        Path path = Paths.get(Constantes.STARDAM_VALLEY);
+        Path path = Paths.get(Constants.STARDAM_VALLEY);
         Granja g;
 
         try{
@@ -38,7 +38,7 @@ public class BinF {
      */
     public static void guardarPartida(Granja g){
 
-        Path path = Paths.get(Constantes.STARDAM_VALLEY);
+        Path path = Paths.get(Constants.STARDAM_VALLEY);
 
         try{
             OutputStream fos = Files.newOutputStream(path);

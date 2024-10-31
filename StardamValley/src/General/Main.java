@@ -1,5 +1,6 @@
 package General;
 
+import Huerto.Huerto;
 import Utils.*;
 
 import java.nio.file.Files;
@@ -39,7 +40,7 @@ public class Main {
 
         boolean salir = false;
 
-        Path path = Paths.get(Constantes.STARDAM_VALLEY);
+        Path path = Paths.get(Constants.STARDAM_VALLEY);
         do {
             System.out.println("BINEVENIDO A STARDAM VALLEY" +
                     "\n-----------------------------------" +
@@ -64,7 +65,7 @@ public class Main {
             }
         } while (!salir);
     }
-    
+
     public static void menuStardam(Granja g, Map<String, ArrayList<Semilla>> semillas) {
 
         boolean salir = false;
@@ -75,7 +76,7 @@ public class Main {
                 "\n3. ESTABLOS" +
                 "\n4. SALIR");
 
-        switch (eleccion()){
+        switch (eleccion()) {
             case "1":
                 //Nuevo dia
                 break;
@@ -95,7 +96,7 @@ public class Main {
 
         boolean salir = false;
 
-        do{
+        do {
             System.out.println("    ESTABLOS" +
                     "\n---------------------------------------" +
                     "\n1. PRODUCIR" +
@@ -105,7 +106,7 @@ public class Main {
                     "\n5. MOSTRAR ANIMALES" +
                     "\n6. VOLVER");
 
-            switch (eleccion()){
+            switch (eleccion()) {
                 case "1":
 
                     break;
@@ -124,12 +125,9 @@ public class Main {
                 case "6":
                     salir = true;
                     break;
-
-
             }
 
-        }while(!salir);
-
+        } while (!salir);
 
 
     }
@@ -195,9 +193,9 @@ public class Main {
 
         String resp;
 
-        PropertiesF.eliminarFichero(Constantes.STARDAM_VALLEY);
+        PropertiesF.eliminarFichero(Constants.STARDAM_VALLEY);
 
-        PropertiesF.crearFichero(Constantes.STARDAM_VALLEY);
+        PropertiesF.crearFichero(Constants.STARDAM_VALLEY);
 
         System.out.println("¿Quieres cambiar la configaración de tu partida?");
         resp = eleccion();

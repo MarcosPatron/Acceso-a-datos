@@ -3,7 +3,9 @@ package Utils;
 import General.Estaciones;
 import General.Granja;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,22 +25,21 @@ public class PropertiesF {
      *               queremos seleccionar.
      * @return El valor del fichero properties.
      */
-    public static String tomarValor(String nombre){
+    public static String tomarValor(String nombre, String fichero) {
 
         String valor;
 
-        try{
-            RandomAccessFile raf = new RandomAccessFile(Constantes.HUERTO, "rw");
+        try {
 
             Properties propiedades = new Properties();
 
-            FileInputStream entrada = new FileInputStream(Constantes.PERSOMNALIZED_PROPERTIES);
+            FileInputStream entrada = new FileInputStream(fichero);
             propiedades.load(entrada);
 
             valor = propiedades.getProperty(nombre);
 
         } catch (Exception e) {
-            throw new RuntimeException("Error al tomar un valor del archivo properties.", e);
+            throw new RuntimeException("Error al tomar un valor del fichero properties.", e);
         }
         return valor;
     }
@@ -80,12 +81,12 @@ public class PropertiesF {
     /**
      * Inicializa el fichero personalized_properties con valores por defecto.
      */
-    public static void inicializarPropiedades(){
+    public static void inicializarPropiedades() {
 
         Properties propiedades = new Properties();
 
         try {
-            FileInputStream entrada = new FileInputStream(Constantes.PERSOMNALIZED_PROPERTIES);
+            FileInputStream entrada = new FileInputStream(Constants.PERSOMNALIZED_PROPERTIES);
             propiedades.load(entrada);
             entrada.close();
 
@@ -95,7 +96,7 @@ public class PropertiesF {
             propiedades.setProperty("estacion", "Primavera");
             propiedades.setProperty("duracion_estacion", "30");
 
-            FileOutputStream salida = new FileOutputStream(Constantes.PERSOMNALIZED_PROPERTIES);
+            FileOutputStream salida = new FileOutputStream(Constants.PERSOMNALIZED_PROPERTIES);
             propiedades.store(salida, "Archivo de configuración presonalizado.");
             salida.close();
 
@@ -107,7 +108,7 @@ public class PropertiesF {
     /**
      * Inicializa el fichero personalized_properties con valores dados.
      */
-    public static void setPropiedades(){
+    public static void setPropiedades() {
 
         Scanner ent = new Scanner(System.in);
         String filas, columnas, presupuesto, estacion, duracion_estacion;
@@ -115,35 +116,35 @@ public class PropertiesF {
         System.out.println("Dame el número de filas: ");
         filas = ent.nextLine();
         // Compruebo si el número introducido por el usuario es entero y posistivo
-        if(filas == null || !filas.matches("\\d+")){
+        if (filas == null || !filas.matches("\\d+")) {
             filas = "4";
         }
 
         System.out.println("Dame el número de columnas: ");
         columnas = ent.nextLine();
-        if(columnas == null || !columnas.matches("\\d+")){
+        if (columnas == null || !columnas.matches("\\d+")) {
             columnas = "4";
         }
 
         System.out.println("Dame el presupuesto: ");
         presupuesto = ent.nextLine();
-        if(presupuesto == null || !presupuesto.matches("\\d+")){
+        if (presupuesto == null || !presupuesto.matches("\\d+")) {
             presupuesto = "1000";
         }
 
         System.out.println("Dame la estación inicial: ");
-        estacion =  ent.nextLine();
+        estacion = ent.nextLine();
 
         System.out.println("Dame la duración de la estación: ");
-        duracion_estacion =  ent.nextLine();
-        if(duracion_estacion == null || !duracion_estacion.matches("\\d+")){
+        duracion_estacion = ent.nextLine();
+        if (duracion_estacion == null || !duracion_estacion.matches("\\d+")) {
             duracion_estacion = "4";
         }
 
         Properties propiedades = new Properties();
 
         try {
-            FileInputStream entrada = new FileInputStream(Constantes.PERSOMNALIZED_PROPERTIES);
+            FileInputStream entrada = new FileInputStream(Constants.PERSOMNALIZED_PROPERTIES);
             propiedades.load(entrada);
             entrada.close();
 
@@ -153,7 +154,7 @@ public class PropertiesF {
             propiedades.setProperty("estacion", estacion);
             propiedades.setProperty("duracion_estacion", duracion_estacion);
 
-            FileOutputStream salida = new FileOutputStream(Constantes.PERSOMNALIZED_PROPERTIES);
+            FileOutputStream salida = new FileOutputStream(Constants.PERSOMNALIZED_PROPERTIES);
             propiedades.store(salida, "Archivo de configuración presonalizado.");
             salida.close();
 
@@ -174,7 +175,7 @@ public class PropertiesF {
         Estaciones estacion;
 
         try {
-            FileInputStream entrada = new FileInputStream(Constantes.PERSOMNALIZED_PROPERTIES);
+            FileInputStream entrada = new FileInputStream(Constants.PERSOMNALIZED_PROPERTIES);
             propiedades.load(entrada);
             entrada.close();
 
