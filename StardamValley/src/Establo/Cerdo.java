@@ -10,4 +10,17 @@ public class Cerdo extends Animal {
     public void producir(){
 
     }
+
+    @Override
+    public void mosrtarAnimal(){
+        String alimentado;
+        if(isAlimentado()){
+            alimentado = "Si";
+        }
+        else{
+            alimentado = "No";
+        }
+        System.out.println("| " + getId() + "        | " + getTipo() + "     | " + alimentado + "            | "
+                + getAlimento().getNombre() + "      | " + getProducto().getNombre() + "     |");
+    }
 }

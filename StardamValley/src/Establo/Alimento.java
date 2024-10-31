@@ -3,11 +3,13 @@ package Establo;
 public class Alimento {
 
     private String nombre;
+    private double precio;
     private int cantidad;
 
-    public Alimento(String nombre, int cantidad) {
+    public Alimento(String nombre, double precio) {
         this.nombre = nombre;
-        this.cantidad = cantidad;
+        this.precio = precio;
+        this.cantidad = 0;
     }
 
     public String getNombre() {
@@ -18,11 +20,23 @@ public class Alimento {
         this.nombre = nombre;
     }
 
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
     public int getCantidad() {
         return cantidad;
     }
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public static void mostrarAlimentos(){
+
     }
 }

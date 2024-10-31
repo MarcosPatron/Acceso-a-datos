@@ -1,5 +1,7 @@
 package Establo;
 
+import java.util.ArrayList;
+
 public abstract class Animal {
 
     private int id;
@@ -8,7 +10,8 @@ public abstract class Animal {
     private int dia_insercion;
     private Alimento alimento;
     private Producto producto;
-    //private double peso
+    private boolean producido;
+    private boolean alimentado;
 
 
     public Animal(int id, Tipo tipo, String nombre, Alimento alimento, Producto producto) {
@@ -18,6 +21,8 @@ public abstract class Animal {
         this.dia_insercion = 0;
         this.alimento = alimento;
         this.producto = producto;
+        this.producido = false;
+        alimentado = false;
     }
 
     public int getId() {
@@ -68,7 +73,32 @@ public abstract class Animal {
         this.producto = producto;
     }
 
+    public boolean isProducido() {
+        return producido;
+    }
+
+    public void setProducido(boolean producido) {
+        this.producido = producido;
+    }
+
+    public boolean isAlimentado() {
+        return alimentado;
+    }
+
+    public void setAlimentado(boolean alimentado) {
+        this.alimentado = alimentado;
+    }
 
     public abstract void producir();
 
+    public abstract void mosrtarAnimal();
+
+    public static void mostrarEstablo(ArrayList<Animal> animales){
+        System.out.println("| ID        | Tipo      | Alimentado    | Alimento  | Producto  |"
+        + "\n-----------------------------------------------------------------");
+        for(Animal a : animales){
+            a.mosrtarAnimal();
+        }
+        System.out.println("-----------------------------------------------------------------");
+    }
 }

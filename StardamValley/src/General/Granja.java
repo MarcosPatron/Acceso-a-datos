@@ -1,8 +1,7 @@
 package General;
 
-import Huerto.Huerto;
-import Utils.Constants;
-import Utils.PropertiesF;
+import Huerto.*;
+import Utils.*;
 
 import java.io.*;
 import java.util.ArrayList;

@@ -3,11 +3,13 @@ package Establo;
 public class Producto {
 
     private String nombre;
+    private double precio;
     private int cantidad;
 
-    public Producto(String nombre, int cantidad) {
+    public Producto(String nombre, double precio) {
         this.nombre = nombre;
-        this.cantidad = cantidad;
+        this.precio = precio;
+        this.cantidad = 0;
     }
 
     public String getNombre() {
@@ -16,6 +18,14 @@ public class Producto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     public int getCantidad() {

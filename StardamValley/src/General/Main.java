@@ -1,8 +1,10 @@
 package General;
 
-import Huerto.Huerto;
+import Huerto.*;
 import Utils.*;
+import Establo.*;
 
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -65,7 +67,7 @@ public class Main {
             }
         } while (!salir);
     }
-
+    
     public static void menuStardam(Granja g, Map<String, ArrayList<Semilla>> semillas) {
 
         boolean salir = false;
@@ -76,7 +78,7 @@ public class Main {
                 "\n3. ESTABLOS" +
                 "\n4. SALIR");
 
-        switch (eleccion()) {
+        switch (eleccion()){
             case "1":
                 //Nuevo dia
                 break;
@@ -96,7 +98,7 @@ public class Main {
 
         boolean salir = false;
 
-        do {
+        do{
             System.out.println("    ESTABLOS" +
                     "\n---------------------------------------" +
                     "\n1. PRODUCIR" +
@@ -106,7 +108,7 @@ public class Main {
                     "\n5. MOSTRAR ANIMALES" +
                     "\n6. VOLVER");
 
-            switch (eleccion()) {
+            switch (eleccion()){
                 case "1":
 
                     break;
@@ -126,10 +128,7 @@ public class Main {
                     salir = true;
                     break;
             }
-
-        } while (!salir);
-
-
+        }while(!salir);
     }
 
     /**
@@ -153,7 +152,6 @@ public class Main {
                     g.nuevoDia(semillas);
                     Huerto.mostrarHuerto();
                     break;
-
                  */
                 case "1":
                     Huerto.atenderCultivos(semillas, g);
@@ -213,7 +211,11 @@ public class Main {
     public static void main(String[] args) {
 
         Map<String, ArrayList<Semilla>> semillas = new HashMap<>();
+        ArrayList<Animal> animales = new ArrayList<>();
 
+        DBManagement.cargarDB(animales);
+
+        Animal.mostrarEstablo(animales);
         XMLFile.cargarSemillas(semillas);
         Granja g = null;
 
