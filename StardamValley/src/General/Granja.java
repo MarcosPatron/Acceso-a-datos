@@ -86,9 +86,8 @@ public class Granja implements Serializable {
         int duracion = parseInt(PropertiesF.tomarValor("duracion_estacion", Constants.PERSOMNALIZED_PROPERTIES));
 
         setDiaJuego(this.diaJuego + 1);
-        if(this.diaJuego > duracion) {
+        if(this.diaJuego == duracion) {
 
-            setDiaJuego(1);
 
             switch (this.estacion) {
                 case Estaciones.Primavera:

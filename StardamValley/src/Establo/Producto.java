@@ -1,15 +1,15 @@
 package Establo;
 
+import Utils.DBManagement;
+
 public class Producto {
 
     private String nombre;
     private double precio;
-    private int cantidad;
 
     public Producto(String nombre, double precio) {
         this.nombre = nombre;
         this.precio = precio;
-        this.cantidad = 0;
     }
 
     public String getNombre() {
@@ -28,12 +28,21 @@ public class Producto {
         this.precio = precio;
     }
 
-    public int getCantidad() {
-        return cantidad;
-    }
+    public static void mostrarProductos(){
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
+        Producto p;
 
+        System.out.println(" -----------------------------------------" +
+                "\n| Alimentos       | Cantidad Disponible   |" +
+                "\n -----------------------------------------");
+
+        for (int i = 1; i <= DBManagement.tamanoTabla("alimentos"); i++) {
+
+            p = DBManagement.cargarProducto(i);
+
+            System.out.printf("| %-15s | %-21d |%n", p.nombre, DBManagement.getCantidadDB("productos", p.nombre));
+
+        }
+        System.out.println(" -----------------------------------------");
+    }
 }

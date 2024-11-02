@@ -37,21 +37,23 @@ public class Main {
 
     /**
      * Muestra el menu de inicio del juego.
+     *
+     * @return La granja ya inicializada.
      */
-    public static void menuInicio(Granja g, Map<String, ArrayList<Semilla>> semillas) {
+    public static Granja menuInicio(Map<String, ArrayList<Semilla>> semillas) {
 
         boolean salir = false;
+        Granja g = null;
 
         Path path = Paths.get(Constants.STARDAM_VALLEY);
         do {
-            System.out.println("BINEVENIDO A STARDAM VALLEY" +
+            System.out.println("BIENVENIDO A STARDAM VALLEY" +
                     "\n-----------------------------------" +
                     "\n1. NUEVA PARTIDA");
 
             if (Files.exists(path)) {
                 System.out.println("2. CARGAR PARTIDA");
             }
-            menuInicio(g, semillas);
             switch (eleccion()) {
                 case "1":
                     g = nuevaPartida();
@@ -66,35 +68,45 @@ public class Main {
                     System.out.println("ERROR. Esa elección no existe.");
             }
         } while (!salir);
+
+        return g;
     }
-    
-    public static void menuStardam(Granja g, Map<String, ArrayList<Semilla>> semillas) {
+
+    public static void menuStardam(Granja g, Map<String, ArrayList<Semilla>> semillas, ArrayList<Animal> animales) {
 
         boolean salir = false;
 
-        System.out.println("    STARDAM VALLEY" +
-                "\n1. INICIAR NUEVO DIA" +
-                "\n2. HUERTO" +
-                "\n3. ESTABLOS" +
-                "\n4. SALIR");
+        do{
+            System.out.println("    STARDAM VALLEY" +
+                    "\n---------------------------------" +
+                    "\n1. INICIAR NUEVO DIA" +
+                    "\n2. HUERTO" +
+                    "\n3. ESTABLOS" +
+                    "\n4. SALIR");
 
-        switch (eleccion()){
-            case "1":
-                //Nuevo dia
-                break;
-            case "2":
-                menuHuerto(g, semillas);
-                break;
-            case "3":
-                menuEstablos(g, semillas);
-                break;
-            case "4":
-                salir = true;
-                break;
-        }
+            switch (eleccion()){
+                case "1":
+                    g.nuevoDia(semillas);
+                    Huerto.mostrarHuerto();
+                    break;
+                case "2":
+                    menuHuerto(g, semillas);
+                    break;
+                case "3":
+                    menuEstablos(g, animales);
+                    break;
+                case "4":
+                    salir = true;
+                    break;
+            }
+        }while(!salir);
+
     }
 
-    public static void menuEstablos(Granja g, Map<String, ArrayList<Semilla>> semillas) {
+    /**
+     * Muestra el menu con funcionalidades del establo.
+     */
+    public static void menuEstablos(Granja g, ArrayList<Animal> animales) {
 
         boolean salir = false;
 
@@ -113,7 +125,7 @@ public class Main {
 
                     break;
                 case "2":
-
+                    Alimento.alimentar(g, animales);
                     break;
                 case "3":
 
@@ -122,7 +134,7 @@ public class Main {
 
                     break;
                 case "5":
-
+                    Animal.mostrarEstablo(animales);
                     break;
                 case "6":
                     salir = true;
@@ -132,9 +144,9 @@ public class Main {
     }
 
     /**
-     * Muestra el manu de las funcionalidades del juego.
+     * Muestra el menu con funcionalidades del huerto.
      */
-    public static void menuHuerto(Granja g, Map<String, ArrayList<Semilla>> semillas) {
+    public static void menuHuerto(Granja g,Map<String, ArrayList<Semilla>> semillas) {
 
         boolean salir = false;
 
@@ -147,12 +159,6 @@ public class Main {
                     "\n4. MOSTRAR INFORMACION DE LA GRANJA" +
                     "\n5. VOLVER");
             switch (eleccion()) {
-                /*
-                case "1":
-                    g.nuevoDia(semillas);
-                    Huerto.mostrarHuerto();
-                    break;
-                 */
                 case "1":
                     Huerto.atenderCultivos(semillas, g);
                     Huerto.mostrarHuerto();
@@ -179,7 +185,6 @@ public class Main {
                     System.out.println("ERROR. Esa elección no existe.");
             }
         } while (!salir);
-
     }
 
     /**
@@ -214,10 +219,11 @@ public class Main {
         ArrayList<Animal> animales = new ArrayList<>();
 
         DBManagement.cargarDB(animales);
-
-        Animal.mostrarEstablo(animales);
         XMLFile.cargarSemillas(semillas);
-        Granja g = null;
+
+        Granja g = menuInicio(semillas);
+
+        menuStardam(g, semillas ,animales);
 
         BinF.guardarPartida(g);
     }

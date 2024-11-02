@@ -2,10 +2,8 @@ package Utils;
 
 import Establo.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class DBManagement {
@@ -110,4 +108,94 @@ public class DBManagement {
         }
     }
 
+    public static int tamanoTabla(String nombre){
+
+        DBManagement.getInstance();
+        int tam;
+
+        try{
+            PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(*) AS tam FROM " + nombre);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next())
+                tam = rs.getInt("tam");
+            else{
+                tam = 0;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return tam;
+    }
+
+    public static void setCantidadDB(String nombre, int cantidad, String nombreA){
+
+        DBManagement.getInstance();
+
+        try{
+            String query = "UPDATE " + nombre + " SET cantidad_disponible = ? WHERE nombre = ?";
+            PreparedStatement stmt = connection.prepareStatement(query);
+
+            stmt.setInt(1, cantidad);
+            stmt.setString(2, nombreA);
+
+            stmt.executeUpdate();;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static int getCantidadDB(String nombre, String nombreA){
+
+        int cantidad = 0;
+
+        try{
+            PreparedStatement stmt = connection.prepareStatement("SELECT cantidad_disponible FROM " + nombre
+                                                                + " WHERE nombre = ?");
+
+            stmt.setString(1, nombreA);
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()) {
+                cantidad = rs.getInt("cantidad_disponible");
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return cantidad;
+    }
+
+    public static void tablaHistorial(String tabla, int idAnimal, int cantidad) {
+        DBManagement.getInstance();
+        LocalDateTime fechaHora = LocalDateTime.now();
+        String cantidadT;
+
+        try {
+
+            if(tabla.equals("consumo")){
+                cantidadT = "cantidad_consumida";
+            }
+            else{
+                cantidadT = "cantidad";
+            }
+
+            String query = "INSERT INTO historial" + tabla + " (id, id_animal, " + cantidadT + ", fecha_" + tabla + ") VALUES (?, ?, ?, ?)";
+            PreparedStatement stmt = connection.prepareStatement(query);
+
+            stmt.setInt(1, tamanoTabla("historial" + tabla) + 1);
+            stmt.setInt(2, idAnimal);
+            stmt.setInt(3, cantidad);
+            stmt.setTimestamp(4, Timestamp.valueOf(fechaHora));
+
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -1,5 +1,7 @@
 package Establo;
 
+import General.Granja;
+
 public class Vaca extends Animal {
 
     private double peso;

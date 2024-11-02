@@ -94,11 +94,13 @@ public abstract class Animal {
     public abstract void mosrtarAnimal();
 
     public static void mostrarEstablo(ArrayList<Animal> animales){
+        System.out.println(" --------------------------------------------------------------- ");
         System.out.println("| ID        | Tipo      | Alimentado    | Alimento  | Producto  |"
-        + "\n-----------------------------------------------------------------");
+        + "\n --------------------------------------------------------------- ");
         for(Animal a : animales){
             a.mosrtarAnimal();
         }
-        System.out.println("-----------------------------------------------------------------");
+        System.out.println(" --------------------------------------------------------------- ");
     }
+
 }
