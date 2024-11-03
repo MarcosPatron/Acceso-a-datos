@@ -1,6 +1,9 @@
 package Establo;
 
+import General.Granja;
 import Utils.DBManagement;
+
+import java.util.ArrayList;
 
 public class Producto {
 
@@ -33,10 +36,10 @@ public class Producto {
         Producto p;
 
         System.out.println(" -----------------------------------------" +
-                "\n| Alimentos       | Cantidad Disponible   |" +
+                "\n| Productos       | Cantidad Disponible   |" +
                 "\n -----------------------------------------");
 
-        for (int i = 1; i <= DBManagement.tamanoTabla("alimentos"); i++) {
+        for (int i = 1; i <= DBManagement.tamanoTabla("productos"); i++) {
 
             p = DBManagement.cargarProducto(i);
 
@@ -44,5 +47,17 @@ public class Producto {
 
         }
         System.out.println(" -----------------------------------------");
+    }
+
+    public static void recogerProduccion(Granja g, ArrayList<Animal> animales){
+
+        System.out.println("Comenzando producción...");
+        for(Animal a : animales){
+
+            if(a.isAlimentado()){
+                a.producir(g);
+            }
+        }
+        //System.out.println("Se han almacenado " + cant + "unidades de " + getProducto().getNombre());
     }
 }

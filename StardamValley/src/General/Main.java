@@ -4,7 +4,6 @@ import Huerto.*;
 import Utils.*;
 import Establo.*;
 
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -122,19 +121,23 @@ public class Main {
 
             switch (eleccion()){
                 case "1":
-
+                    Producto.recogerProduccion(g, animales);
+                    Producto.mostrarProductos();
                     break;
                 case "2":
                     Alimento.alimentar(g, animales);
+                    Alimento.mostrarAlimentos();
                     break;
                 case "3":
-
+                    g.setDinero(g.getDinero() + g.getAlmacen().venderProductos());
                     break;
                 case "4":
-
+                    Alimento.rellenarComedero();
                     break;
                 case "5":
                     Animal.mostrarEstablo(animales);
+                    Alimento.mostrarAlimentos();
+                    Producto.mostrarProductos();
                     break;
                 case "6":
                     salir = true;

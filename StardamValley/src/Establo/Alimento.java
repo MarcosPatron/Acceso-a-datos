@@ -51,35 +51,47 @@ public class Alimento {
 
     public static void alimentar(Granja g, ArrayList<Animal> animales){
 
-        for (int i = 0; i < animales.size(); i++) {
-            int cant = 1;
-            if(!animales.get(i).isAlimentado() &&
-                    DBManagement.getCantidadDB("alimentos", animales.get(i).getAlimento().getNombre()) > 0){
+        for (Animal animal : animales) {
+            int cant = 0;
+            if (!animal.isAlimentado() &&
+                    DBManagement.getCantidadDB("alimentos", animal.getAlimento().getNombre()) > 0) {
 
-                animales.get(i).setAlimentado(true);
+                animal.setAlimentado(true);
 
-                if(animales.get(i).getTipo() == Tipo.VACA){
+                if (animal.getTipo() == Tipo.VACA) {
 
-                    int edad = g.getDiaJuego() - animales.get(i).getDia_insercion();
+                    int edad = g.getDiaJuego() - animal.getDia_insercion();
 
-                    if(edad < 10){
+                    if (edad < 10) {
                         cant = 1;
                     } else if (edad > 40) {
                         cant = 2;
-                    }
-                    else {
+                    } else {
                         cant = 3;
                     }
                 }
                 DBManagement.setCantidadDB("alimentos",
                         DBManagement.getCantidadDB("alimentos",
-                                animales.get(i).getAlimento().nombre) - cant, animales.get(i).getAlimento().nombre);
-                DBManagement.tablaHistorial("consumo", animales.get(i).getId(), cant);
-            }
-            else{
-                System.out.println("No se ha podido alimentar a " + animales.get(i).getNombre());
+                                animal.getAlimento().nombre) - cant, animal.getAlimento().nombre);
+                DBManagement.tablaHistorial("consumo", animal.getId(), cant);
+            } else {
+                System.out.println("No se ha podido alimentar a " + animal.getNombre());
             }
         }
+    }
+
+    public static void rellenarComedero(){
+
+        System.out.println("Rellenando comederos...");
+
+        DBManagement.setCantidadDB("alimentos", 25, "Maiz");
+        System.out.println("- Se ha rellenado la tolva de Maiz");
+
+        DBManagement.setCantidadDB("alimentos", 25, "Avena");
+        System.out.println("- Se ha rellenado la tolva de Avena");
+
+        DBManagement.setCantidadDB("alimentos", 25, "Heno");
+        System.out.println("- Se ha rellenado la tolva de Heno");
     }
 
 }

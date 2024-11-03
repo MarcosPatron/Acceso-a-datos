@@ -1,5 +1,7 @@
 package Establo;
 
+import General.Granja;
+
 import java.util.ArrayList;
 
 public abstract class Animal {
@@ -89,7 +91,7 @@ public abstract class Animal {
         this.alimentado = alimentado;
     }
 
-    public abstract void producir();
+    public abstract void producir(Granja g);
 
     public abstract void mosrtarAnimal();
 
