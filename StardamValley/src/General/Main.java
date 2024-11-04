@@ -135,7 +135,7 @@ public class Main {
                     g.setDinero(g.getDinero() + g.getAlmacen().venderProductos());
                     break;
                 case "4":
-                    Alimento.rellenarComedero();
+                    Alimento.rellenarComedero(g);
                     break;
                 case "5":
                     Animal.mostrarEstablo(animales);

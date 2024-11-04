@@ -31,6 +31,9 @@ public class Alimento {
         this.precio = precio;
     }
 
+    /**
+     * Muestra los alimetos en una tabla
+     */
     public static void mostrarAlimentos(){
 
         Alimento a;
@@ -49,6 +52,9 @@ public class Alimento {
         System.out.println(" -----------------------------------------");
     }
 
+    /**
+     * Alimenta a los animales de la granja
+     */
     public static void alimentar(Granja g, ArrayList<Animal> animales){
 
         for (Animal animal : animales) {
@@ -80,18 +86,34 @@ public class Alimento {
         }
     }
 
-    public static void rellenarComedero(){
+    /**
+     * Rellena hasta un maximo de 25 los alimentos, si no hay dinero para comprarlo, no lo hace
+     */
+    public static void rellenarComedero(Granja g){
 
         System.out.println("Rellenando comederos...");
 
-        DBManagement.setCantidadDB("alimentos", 25, "Maiz");
-        System.out.println("- Se ha rellenado la tolva de Maiz");
+        int cant = 25 - DBManagement.getCantidadDB("alimentos", "Maiz");
+        int total = (int) (cant * 0.5);
+        cant = 25 - DBManagement.getCantidadDB("alimentos", "Heno");
+        total += cant;
+        cant = 25 - DBManagement.getCantidadDB("alimentos", "Avena");
+        total = (int) (cant * 0.7);
 
-        DBManagement.setCantidadDB("alimentos", 25, "Avena");
-        System.out.println("- Se ha rellenado la tolva de Avena");
+        if(g.getDinero() >= total){
+            DBManagement.setCantidadDB("alimentos", 25, "Maiz");
+            System.out.println("- Se ha rellenado la tolva de Maiz");
 
-        DBManagement.setCantidadDB("alimentos", 25, "Heno");
-        System.out.println("- Se ha rellenado la tolva de Heno");
+            DBManagement.setCantidadDB("alimentos", 25, "Avena");
+            System.out.println("- Se ha rellenado la tolva de Avena");
+
+            DBManagement.setCantidadDB("alimentos", 25, "Heno");
+            System.out.println("- Se ha rellenado la tolva de Heno");
+        }
+        else{
+            System.out.println("No hay dinero sufuciente para comprar los alimentos");
+        }
+
     }
 
 }

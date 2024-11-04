@@ -93,8 +93,12 @@ public abstract class Animal {
 
     public abstract void producir(Granja g);
 
+
     public abstract void mosrtarAnimal();
 
+    /**
+     * Muestra los animales en una tabla
+     */
     public static void mostrarEstablo(ArrayList<Animal> animales){
         System.out.println(" --------------------------------------------------------------- ");
         System.out.println("| ID        | Tipo      | Alimentado    | Alimento  | Producto  |"
@@ -105,6 +109,9 @@ public abstract class Animal {
         System.out.println(" --------------------------------------------------------------- ");
     }
 
+    /**
+     * Inicia un nuevo día para lso animales.
+     */
     public static void nuevoDiaAnimal(ArrayList<Animal> animales){
         for(Animal a : animales){
             a.setDia_insercion(a.dia_insercion++);

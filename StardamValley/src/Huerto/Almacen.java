@@ -2,6 +2,7 @@ package Huerto;
 
 
 import Establo.Producto;
+import Utils.DBManagement;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -11,16 +12,13 @@ import java.util.Map;
 public class Almacen implements Serializable {
 
     private HashMap<Semilla, Integer> frutos;
-    private HashMap<Producto, Integer> productos;
 
     public Almacen() {
         this.frutos = new HashMap<>();
-        this.productos = new HashMap<>();
     }
 
-    public Almacen(HashMap<Semilla, Integer> frutos, HashMap<Producto, Integer> productos) {
+    public Almacen(HashMap<Semilla, Integer> frutos) {
         this.frutos = frutos;
-        this.productos = productos;
     }
 
     public HashMap<Semilla, Integer> getFrutos() {
@@ -29,14 +27,6 @@ public class Almacen implements Serializable {
 
     public void setFrutos(HashMap<Semilla, Integer> frutos) {
         this.frutos = frutos;
-    }
-
-    public HashMap<Producto, Integer> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(HashMap<Producto, Integer> productos) {
-        this.productos = productos;
     }
 
     /**
@@ -76,13 +66,20 @@ public class Almacen implements Serializable {
         return cont;
     }
 
+    /**
+     * Vende los productos almacenados
+     *
+     * @return El dinero que se ha adquirido al vender los productos
+     */
     public int venderProductos(){
 
         double cont = 0, total = 0;
-        Iterator<Map.Entry<Producto, Integer>> iter = this.productos.entrySet().iterator();
 
         System.out.println("Vendiendo productos...");
 
+        for (int i = 1; i <= DBManagement.tamanoTabla("productos"); i++) {
+            cont += DBManagement.getCantidadDB("productos", DBManagement.cargarProducto(i));
+        }
         while (iter.hasNext()) {
             Map.Entry<Producto, Integer> entry = iter.next();
 

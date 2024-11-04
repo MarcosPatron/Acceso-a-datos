@@ -88,7 +88,6 @@ public class Tienda implements Serializable {
                 enc = true;
             }
         }
-
         if(enc){
             if(coste < g.getDinero()){
 

@@ -38,6 +38,11 @@ public class DBManagement {
         return instance;
     }
 
+    /**
+     * Toma un producto por el id
+     *
+     * @return el Producto almacenado en la base de datos
+     */
     public static Producto cargarProducto(int id){
 
         DBManagement.getInstance();
@@ -58,6 +63,11 @@ public class DBManagement {
         }
         return p;
     }
+
+    /**
+     * Toma un alimeto por el id
+     * @return el Alimento almacenado en la base de datos.
+     */
     public static Alimento cargarAlimento(int id){
 
         DBManagement.getInstance();
@@ -79,6 +89,9 @@ public class DBManagement {
         return a;
     }
 
+    /**
+     * Carga la tabla animales de la base de datos a un ArrayList
+     */
     public static void cargarDB(ArrayList<Animal> animales){
 
         DBManagement.getInstance();
@@ -108,6 +121,9 @@ public class DBManagement {
         }
     }
 
+    /**
+     * @return El tamaño de la tabla introducida por paametros.
+     */
     public static int tamanoTabla(String nombre){
 
         DBManagement.getInstance();
@@ -130,6 +146,9 @@ public class DBManagement {
         return tam;
     }
 
+    /**
+     * Pone la cantidad de objetos almacenada a la introducida por parametros.
+     */
     public static void setCantidadDB(String nombre, int cantidad, String nombreA){
 
         DBManagement.getInstance();
@@ -148,6 +167,9 @@ public class DBManagement {
         }
     }
 
+    /**
+     * @return La cantidad de objetos de la tabla
+     */
     public static int getCantidadDB(String nombre, String nombreA){
 
         int cantidad = 0;
@@ -170,6 +192,9 @@ public class DBManagement {
         return cantidad;
     }
 
+    /**
+     * Pone los valores introdducidos por parametros a la tabla historial
+     */
     public static void tablaHistorial(String tabla, int idAnimal, int cantidad) {
         DBManagement.getInstance();
         LocalDateTime fechaHora = LocalDateTime.now();
