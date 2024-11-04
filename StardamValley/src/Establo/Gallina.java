@@ -30,12 +30,15 @@ public class Gallina extends Animal {
             cant += g.getAlmacen().getProductos().get(getProducto());
         }
 
-        g.getAlmacen().getProductos().put(getProducto(), cant);
+        if(cant == 0){
+            g.getAlmacen().getProductos().put(getProducto(), cant);
 
-        DBManagement.setCantidadDB("productos",
-                DBManagement.getCantidadDB("productos",
-                        getAlimento().getNombre()) + cant, getAlimento().getNombre());
-        DBManagement.tablaHistorial("produccion", getId(), cant);
+            DBManagement.setCantidadDB("productos",
+                    DBManagement.getCantidadDB("productos",
+                            getProducto().getNombre()) + cant, getProducto().getNombre());
+            DBManagement.tablaHistorial("produccion", getId(), cant);
+        }
+
     }
 
     @Override

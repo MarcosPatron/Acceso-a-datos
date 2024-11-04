@@ -52,7 +52,7 @@ public class Alimento {
     public static void alimentar(Granja g, ArrayList<Animal> animales){
 
         for (Animal animal : animales) {
-            int cant = 0;
+            int cant = 1;
             if (!animal.isAlimentado() &&
                     DBManagement.getCantidadDB("alimentos", animal.getAlimento().getNombre()) > 0) {
 

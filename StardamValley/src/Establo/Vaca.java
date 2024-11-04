@@ -32,7 +32,7 @@ public class Vaca extends Animal {
 
         DBManagement.setCantidadDB("productos",
                 DBManagement.getCantidadDB("productos",
-                        getAlimento().getNombre()) + cant, getAlimento().getNombre());
+                        getProducto().getNombre()) + cant, getProducto().getNombre());
         DBManagement.tablaHistorial("produccion", getId(), cant);
     }
 

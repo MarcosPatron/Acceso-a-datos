@@ -39,7 +39,7 @@ public class Main {
      *
      * @return La granja ya inicializada.
      */
-    public static Granja menuInicio(Map<String, ArrayList<Semilla>> semillas) {
+    public static Granja menuInicio(Map<String, ArrayList<Semilla>> semillas, ArrayList<Animal> animales) {
 
         boolean salir = false;
         Granja g = null;
@@ -56,7 +56,7 @@ public class Main {
             switch (eleccion()) {
                 case "1":
                     g = nuevaPartida();
-                    g.nuevoDia(semillas);
+                    g.nuevoDia(semillas, animales);
                     salir = true;
                     break;
                 case "2":
@@ -71,6 +71,9 @@ public class Main {
         return g;
     }
 
+    /**
+     * Muestra el menu de StardamValley
+     */
     public static void menuStardam(Granja g, Map<String, ArrayList<Semilla>> semillas, ArrayList<Animal> animales) {
 
         boolean salir = false;
@@ -85,7 +88,7 @@ public class Main {
 
             switch (eleccion()){
                 case "1":
-                    g.nuevoDia(semillas);
+                    g.nuevoDia(semillas, animales);
                     Huerto.mostrarHuerto();
                     break;
                 case "2":
@@ -224,7 +227,7 @@ public class Main {
         DBManagement.cargarDB(animales);
         XMLFile.cargarSemillas(semillas);
 
-        Granja g = menuInicio(semillas);
+        Granja g = menuInicio(semillas, animales);
 
         menuStardam(g, semillas ,animales);
 

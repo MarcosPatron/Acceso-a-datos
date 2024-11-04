@@ -1,5 +1,6 @@
 package General;
 
+import Establo.Animal;
 import Huerto.*;
 import Utils.*;
 
@@ -81,7 +82,7 @@ public class Granja implements Serializable {
      *
      * @param sem La lista de las semillas disponibles en al juego
      */
-    public void nuevoDia(Map<String, ArrayList<Semilla>> sem){
+    public void nuevoDia(Map<String, ArrayList<Semilla>> sem, ArrayList<Animal> animales){
 
         int duracion = parseInt(PropertiesF.tomarValor("duracion_estacion", Constants.PERSOMNALIZED_PROPERTIES));
 
@@ -107,6 +108,7 @@ public class Granja implements Serializable {
         }
         else{
             Huerto.nuevoDiaHuerto();
+            Animal.nuevoDiaAnimal(animales);
         }
         this.semillasVenta.nuevasSemillas(sem.get(this.estacion.name()));
     }

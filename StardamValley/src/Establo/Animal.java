@@ -105,4 +105,11 @@ public abstract class Animal {
         System.out.println(" --------------------------------------------------------------- ");
     }
 
+    public static void nuevoDiaAnimal(ArrayList<Animal> animales){
+        for(Animal a : animales){
+            a.setDia_insercion(a.dia_insercion++);
+            a.setAlimentado(false);
+            a.setProducido(false);
+        }
+    }
 }

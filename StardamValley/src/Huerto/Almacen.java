@@ -89,7 +89,7 @@ public class Almacen implements Serializable {
             cont += entry.getKey().getPrecio() * entry.getValue();
 
             if (cont != 0){
-                System.out.println("- Se ha vendido " + entry.getValue() + "unidades de "
+                System.out.println("- Se ha vendido " + entry.getValue() + " unidades de "
                         + entry.getKey().getNombre() + " por " + cont + "€.");
             }
 
