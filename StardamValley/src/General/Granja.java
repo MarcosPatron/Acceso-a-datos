@@ -17,6 +17,7 @@ public class Granja implements Serializable {
     private Estaciones estacion;
     private Tienda semillasVenta;
     private Almacen almacen;
+    private ArrayList<Animal> animales;
 
     public Granja(int dinero, Estaciones estacion){
         this.diaJuego = 0;
@@ -24,6 +25,7 @@ public class Granja implements Serializable {
         this.estacion = estacion;
         this.semillasVenta = new Tienda();
         this.almacen = new Almacen();
+        this.animales = new ArrayList<>();
     }
 
     public int getDiaJuego() {
@@ -58,6 +60,14 @@ public class Granja implements Serializable {
 
     public void setAlmacen(Almacen almacen) {
         this.almacen = almacen;
+    }
+
+    public ArrayList<Animal> getAnimales() {
+        return animales;
+    }
+
+    public void setAnimales(ArrayList<Animal> animales) {
+        this.animales = animales;
     }
 
     /**

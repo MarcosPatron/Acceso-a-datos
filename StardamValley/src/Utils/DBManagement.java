@@ -47,30 +47,42 @@ public class DBManagement {
 
         DBManagement.getInstance();
 
-        try {
+        deleteTable("historialconsumo");
+        deleteTable("historialproduccion");
 
-            BufferedReader br = new BufferedReader(new FileReader(Constants.DB_PROPERTIES));
-            String line;
-            StringBuilder sqlCommand = new StringBuilder();
+        inicializarTabla("productos");
+        inicializarTabla("alimentos");
 
-            // Leer y ejecutar cada línea del archivo SQL
-            try (Statement stmt = connection.createStatement()) {
-                while ((line = br.readLine()) != null) {
-                    line = line.trim();
+    }
 
-                    // Ignorar comentarios en SQL y líneas vacías
-                    if (line.isEmpty() || line.startsWith("--") || line.startsWith("/*")) {
-                        continue;
-                    }
+    public static void inicializarTabla(String nombre){
 
-                    sqlCommand.append(line);
-                    // Verificar si es el final de un comando SQL
-                    if (line.endsWith(";")) {
-                        stmt.execute(sqlCommand.toString());
-                        sqlCommand.setLength(0);
-                    }
-                }
+        DBManagement.getInstance();
+
+        try{
+            PreparedStatement stmt = connection.prepareStatement("UPDATE " + nombre + " SET cantidad_disponible = 0 WHERE id = ?");
+
+            for (int i = 1; i <= tamanoTabla(nombre); i++) {
+                stmt.setInt(1, i);
+                ResultSet rs = stmt.executeQuery();
+                stmt.executeUpdate();
             }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void deleteTable(String nombre){
+
+        DBManagement.getInstance();
+
+        try{
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM " + nombre);
+            ResultSet rs = stmt.executeQuery();
+
+            stmt.executeUpdate();
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

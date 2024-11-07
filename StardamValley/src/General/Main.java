@@ -39,7 +39,7 @@ public class Main {
      *
      * @return La granja ya inicializada.
      */
-    public static Granja menuInicio(Map<String, ArrayList<Semilla>> semillas, ArrayList<Animal> animales) {
+    public static Granja menuInicio(Map<String, ArrayList<Semilla>> semillas) {
 
         boolean salir = false;
         Granja g = null;
@@ -56,8 +56,9 @@ public class Main {
             switch (eleccion()) {
                 case "1":
                     g = nuevaPartida();
-                    g.nuevoDia(semillas, animales);
-                    DBManagement.inicializarDB();
+                    DBManagement.cargarDB(g.getAnimales());
+                    g.nuevoDia(semillas, g.getAnimales());
+                    //DBManagement.inicializarDB();
                     salir = true;
                     break;
                 case "2":
@@ -75,7 +76,7 @@ public class Main {
     /**
      * Muestra el menu de StardamValley
      */
-    public static void menuStardam(Granja g, Map<String, ArrayList<Semilla>> semillas, ArrayList<Animal> animales) {
+    public static void menuStardam(Granja g, Map<String, ArrayList<Semilla>> semillas) {
 
         boolean salir = false;
 
@@ -89,14 +90,14 @@ public class Main {
 
             switch (eleccion()){
                 case "1":
-                    g.nuevoDia(semillas, animales);
+                    g.nuevoDia(semillas, g.getAnimales());
                     Huerto.mostrarHuerto();
                     break;
                 case "2":
                     menuHuerto(g, semillas);
                     break;
                 case "3":
-                    menuEstablos(g, animales);
+                    menuEstablos(g);
                     break;
                 case "4":
                     salir = true;
@@ -109,7 +110,7 @@ public class Main {
     /**
      * Muestra el menu con funcionalidades del establo.
      */
-    public static void menuEstablos(Granja g, ArrayList<Animal> animales) {
+    public static void menuEstablos(Granja g) {
 
         boolean salir = false;
 
@@ -125,11 +126,11 @@ public class Main {
 
             switch (eleccion()){
                 case "1":
-                    Producto.recogerProduccion(g, animales);
+                    Producto.recogerProduccion(g, g.getAnimales());
                     Producto.mostrarProductos();
                     break;
                 case "2":
-                    Alimento.alimentar(g, animales);
+                    Alimento.alimentar(g, g.getAnimales());
                     Alimento.mostrarAlimentos();
                     break;
                 case "3":
@@ -139,7 +140,7 @@ public class Main {
                     Alimento.rellenarComedero(g);
                     break;
                 case "5":
-                    Animal.mostrarEstablo(animales);
+                    Animal.mostrarEstablo(g.getAnimales());
                     Alimento.mostrarAlimentos();
                     Producto.mostrarProductos();
                     break;
@@ -226,12 +227,20 @@ public class Main {
         ArrayList<Animal> animales = new ArrayList<>();
 
         DBManagement.cargarDB(animales);
+
+
+
         XMLFile.cargarSemillas(semillas);
 
-        Granja g = menuInicio(semillas, animales);
+        Granja g = menuInicio(semillas);
 
-        menuStardam(g, semillas ,animales);
+        menuStardam(g, semillas);
 
         BinF.guardarPartida(g);
     }
 }
+
+/*
+HACER:
+tabla transacciones, inicilizar bbdd, no cargar animales en partida guardada, no alimetar 2 veces al dia ->> hacer alimentado a false si se produce
+ */

@@ -109,6 +109,8 @@ public class Alimento {
 
             DBManagement.setCantidadDB("alimentos", 25, "Heno");
             System.out.println("- Se ha rellenado la tolva de Heno");
+
+            System.out.println("TOTAL GASTOS: " + total + "€.");
         }
         else{
             System.out.println("No hay dinero sufuciente para comprar los alimentos");
