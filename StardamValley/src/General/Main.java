@@ -57,6 +57,7 @@ public class Main {
                 case "1":
                     g = nuevaPartida();
                     g.nuevoDia(semillas, animales);
+                    DBManagement.inicializarDB();
                     salir = true;
                     break;
                 case "2":

@@ -2,6 +2,8 @@ package Utils;
 
 import Establo.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -36,6 +38,42 @@ public class DBManagement {
             instance = new DBManagement();
         }
         return instance;
+    }
+
+    /**
+     * Inicializa la base de datos desde el archivo StardamValley.sql
+     */
+    public static void inicializarDB(){
+
+        DBManagement.getInstance();
+
+        try {
+
+            BufferedReader br = new BufferedReader(new FileReader(Constants.DB_PROPERTIES));
+            String line;
+            StringBuilder sqlCommand = new StringBuilder();
+
+            // Leer y ejecutar cada línea del archivo SQL
+            try (Statement stmt = connection.createStatement()) {
+                while ((line = br.readLine()) != null) {
+                    line = line.trim();
+
+                    // Ignorar comentarios en SQL y líneas vacías
+                    if (line.isEmpty() || line.startsWith("--") || line.startsWith("/*")) {
+                        continue;
+                    }
+
+                    sqlCommand.append(line);
+                    // Verificar si es el final de un comando SQL
+                    if (line.endsWith(";")) {
+                        stmt.execute(sqlCommand.toString());
+                        sqlCommand.setLength(0);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

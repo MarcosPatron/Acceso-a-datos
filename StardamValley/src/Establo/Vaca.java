@@ -24,11 +24,6 @@ public class Vaca extends Animal {
     public void producir(Granja g){
 
         int cant = (int) peso / 100;
-        if(g.getAlmacen().getProductos().get(getProducto()) != null){
-            cant += g.getAlmacen().getProductos().get(getProducto());
-        }
-
-        g.getAlmacen().getProductos().put(getProducto(), cant);
 
         DBManagement.setCantidadDB("productos",
                 DBManagement.getCantidadDB("productos",

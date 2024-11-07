@@ -31,12 +31,6 @@ public class Oveja extends Animal {
         if(fechaEsquilado == null || hoy.getDayOfYear() - fechaEsquilado.getDayOfYear() >= 2){
             fechaEsquilado = hoy;
 
-            if(g.getAlmacen().getProductos().get(getProducto()) != null){
-                cant += g.getAlmacen().getProductos().get(getProducto());
-            }
-
-            g.getAlmacen().getProductos().put(getProducto(), cant);
-
             DBManagement.setCantidadDB("productos",
                     DBManagement.getCantidadDB("productos",
                             getProducto().getNombre()) + cant, getProducto().getNombre());

@@ -31,12 +31,6 @@ public class Cerdo extends Animal {
             default: cant = 0;
         }
 
-        if(g.getAlmacen().getProductos().get(getProducto()) != null){
-            cant += g.getAlmacen().getProductos().get(getProducto());
-        }
-
-        g.getAlmacen().getProductos().put(getProducto(), cant);
-
         DBManagement.setCantidadDB("productos",
                 DBManagement.getCantidadDB("productos",
                         getProducto().getNombre()) + cant, getProducto().getNombre());

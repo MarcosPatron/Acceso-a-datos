@@ -78,19 +78,20 @@ public class Almacen implements Serializable {
         System.out.println("Vendiendo productos...");
 
         for (int i = 1; i <= DBManagement.tamanoTabla("productos"); i++) {
-            cont += DBManagement.getCantidadDB("productos", DBManagement.cargarProducto(i));
-        }
-        while (iter.hasNext()) {
-            Map.Entry<Producto, Integer> entry = iter.next();
 
-            cont += entry.getKey().getPrecio() * entry.getValue();
+            Producto p = DBManagement.cargarProducto(i);
+
+            cont += DBManagement.getCantidadDB("productos", p.getNombre()) *
+            p.getPrecio();
 
             if (cont != 0){
-                System.out.println("- Se ha vendido " + entry.getValue() + " unidades de "
-                        + entry.getKey().getNombre() + " por " + cont + "€.");
+                System.out.println("- Se ha vendido " +
+                        DBManagement.getCantidadDB("productos", p.getNombre()) +
+                        " unidades de " + p.getNombre() + " por " + cont + "€.");
             }
 
-            iter.remove();
+            DBManagement.setCantidadDB("productos", 0, p.getNombre());
+
             total += cont;
             cont = 0;
         }

@@ -9,6 +9,7 @@ public class Constants {
     public static final String HUERTO = "resources/huerto.dat";
     public static final String SEMILLAS = "resources/semillas.xml";
     public static final String DB_PROPERTIES = "resources/DB.properties";
+    public static final String SCRIPT_DB = "resources/StardamValley.sql";
 
     //Fichero aleatorio
     public static final int TAM_HUERTO_BYTES = 9;
