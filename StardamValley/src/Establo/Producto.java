@@ -3,9 +3,10 @@ package Establo;
 import General.Granja;
 import Utils.DBManagement;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Producto {
+public class Producto implements Serializable {
 
     private String nombre;
     private double precio;
@@ -58,6 +59,5 @@ public class Producto {
                 a.producir(g);
             }
         }
-        //System.out.println("Se han almacenado " + cant + "unidades de " + getProducto().getNombre());
     }
 }

@@ -1,9 +1,6 @@
 package Utils;
 
 import Establo.*;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -49,22 +46,39 @@ public class DBManagement {
 
         deleteTable("historialconsumo");
         deleteTable("historialproduccion");
+        deleteTable("transacciones");
 
-        inicializarTabla("productos");
-        inicializarTabla("alimentos");
+        inicializarAlimentos();
+        inicializarProductos();
 
     }
 
-    public static void inicializarTabla(String nombre){
+    public static void inicializarAlimentos(){
 
         DBManagement.getInstance();
 
         try{
-            PreparedStatement stmt = connection.prepareStatement("UPDATE " + nombre + " SET cantidad_disponible = 0 WHERE id = ?");
+            PreparedStatement stmt = connection.prepareStatement("UPDATE alimentos SET cantidad_disponible = 5 WHERE id = ?");
 
-            for (int i = 1; i <= tamanoTabla(nombre); i++) {
+            for (int i = 1; i <= tamanoTabla("alimentos"); i++) {
                 stmt.setInt(1, i);
-                ResultSet rs = stmt.executeQuery();
+                stmt.executeUpdate();
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void inicializarProductos(){
+
+        DBManagement.getInstance();
+
+        try{
+            PreparedStatement stmt = connection.prepareStatement("UPDATE productos SET cantidad_disponible = 0 WHERE id = ?");
+
+            for (int i = 1; i <= tamanoTabla("productos"); i++) {
+                stmt.setInt(1, i);
                 stmt.executeUpdate();
             }
 
@@ -79,8 +93,6 @@ public class DBManagement {
 
         try{
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM " + nombre);
-            ResultSet rs = stmt.executeQuery();
-
             stmt.executeUpdate();
 
         } catch (Exception e) {
@@ -273,4 +285,29 @@ public class DBManagement {
             throw new RuntimeException(e);
         }
     }
+
+    public static void anadirTransaccion(String tipo_transaccion, String tipo_elemento, double precio){
+
+        DBManagement.getInstance();
+
+        LocalDateTime fechaHora = LocalDateTime.now();
+
+        try{
+            String query = "INSERT INTO transacciones (id, tipo_transaccion, tipo_elemento, precio, fecha_transaccion) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement stmt = connection.prepareStatement(query);
+
+            stmt.setInt(1, (tamanoTabla("transacciones") + 1));
+            stmt.setString(2,  tipo_transaccion);
+            stmt.setString(3, tipo_elemento);
+            stmt.setDouble(4, precio);
+            stmt.setTimestamp(5, Timestamp.valueOf(fechaHora));
+
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 }

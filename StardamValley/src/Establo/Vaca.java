@@ -3,7 +3,9 @@ package Establo;
 import General.Granja;
 import Utils.DBManagement;
 
-public class Vaca extends Animal {
+import java.io.Serializable;
+
+public class Vaca extends Animal implements Serializable {
 
     private double peso;
 

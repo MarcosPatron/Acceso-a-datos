@@ -58,7 +58,7 @@ public class Main {
                     g = nuevaPartida();
                     DBManagement.cargarDB(g.getAnimales());
                     g.nuevoDia(semillas, g.getAnimales());
-                    //DBManagement.inicializarDB();
+                    DBManagement.inicializarDB();
                     salir = true;
                     break;
                 case "2":
@@ -224,11 +224,6 @@ public class Main {
     public static void main(String[] args) {
 
         Map<String, ArrayList<Semilla>> semillas = new HashMap<>();
-        ArrayList<Animal> animales = new ArrayList<>();
-
-        DBManagement.cargarDB(animales);
-
-
 
         XMLFile.cargarSemillas(semillas);
 
@@ -239,8 +234,3 @@ public class Main {
         BinF.guardarPartida(g);
     }
 }
-
-/*
-HACER:
-tabla transacciones, inicilizar bbdd, no cargar animales en partida guardada, no alimetar 2 veces al dia ->> hacer alimentado a false si se produce
- */

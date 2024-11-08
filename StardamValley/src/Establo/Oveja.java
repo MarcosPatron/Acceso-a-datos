@@ -3,9 +3,10 @@ package Establo;
 import General.Granja;
 import Utils.DBManagement;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Oveja extends Animal {
+public class Oveja extends Animal implements Serializable {
 
     private LocalDate fechaEsquilado;
 

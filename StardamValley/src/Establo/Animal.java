@@ -2,9 +2,10 @@ package Establo;
 
 import General.Granja;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Animal {
+public abstract class Animal implements Serializable {
 
     private int id;
     private Tipo tipo;

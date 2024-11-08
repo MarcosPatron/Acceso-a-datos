@@ -13,6 +13,4 @@ public class Constants {
 
     //Fichero aleatorio
     public static final int TAM_HUERTO_BYTES = 9;
-
-    public static final int CANTIDAD_MAXIMA_ALIMENTO = 25;
 }

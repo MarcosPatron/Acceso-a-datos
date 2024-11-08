@@ -1,7 +1,8 @@
-package Huerto;
+package General;
 
 
 import Establo.Producto;
+import Huerto.Semilla;
 import Utils.DBManagement;
 
 import java.io.Serializable;
@@ -62,6 +63,7 @@ public class Almacen implements Serializable {
         if(cont == 0){
             System.out.println("No hay nada en el almacen para vender.");
         }
+        DBManagement.anadirTransaccion("VENTA", "HUERTO", cont);
         System.out.println("Se ha vendido la cosecha.");
         return cont;
     }
@@ -100,6 +102,7 @@ public class Almacen implements Serializable {
             System.out.println("No hay nada en el almacen para vender.");
         }
         else{
+            DBManagement.anadirTransaccion("VENTA", "PRODUCTO", total);
             System.out.println("TOTAL INGRESOS: " + total + "€.");
         }
         return (int) total;

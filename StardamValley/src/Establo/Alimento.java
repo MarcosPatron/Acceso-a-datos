@@ -3,9 +3,10 @@ package Establo;
 import General.Granja;
 import Utils.DBManagement;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Alimento {
+public class Alimento implements Serializable {
 
     private String nombre;
     private double precio;
@@ -111,6 +112,7 @@ public class Alimento {
             System.out.println("- Se ha rellenado la tolva de Heno");
 
             System.out.println("TOTAL GASTOS: " + total + "€.");
+            DBManagement.anadirTransaccion("COMPRA", "ALIMENTO", total);
         }
         else{
             System.out.println("No hay dinero sufuciente para comprar los alimentos");

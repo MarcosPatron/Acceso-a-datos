@@ -3,7 +3,9 @@ package Establo;
 import General.Granja;
 import Utils.DBManagement;
 
-public class Gallina extends Animal {
+import java.io.Serializable;
+
+public class Gallina extends Animal implements Serializable {
 
     public Gallina(int id, Tipo tipo, String nombre, Alimento alimento, Producto producto) {
         super(id, tipo, nombre, alimento, producto);
@@ -26,10 +28,12 @@ public class Gallina extends Animal {
             cant = 2;
         }
 
-        DBManagement.setCantidadDB("productos",
-                DBManagement.getCantidadDB("productos",
-                        getProducto().getNombre()) + cant, getProducto().getNombre());
-        DBManagement.tablaHistorial("produccion", getId(), cant);
+        if(cant > 0){
+            DBManagement.setCantidadDB("productos",
+                    DBManagement.getCantidadDB("productos",
+                            getProducto().getNombre()) + cant, getProducto().getNombre());
+            DBManagement.tablaHistorial("produccion", getId(), cant);
+        }
     }
 
     @Override

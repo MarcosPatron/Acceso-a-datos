@@ -4,7 +4,10 @@ import General.Estaciones;
 import General.Granja;
 import Utils.DBManagement;
 
-public class Cerdo extends Animal {
+import java.io.Serializable;
+import java.util.Random;
+
+public class Cerdo extends Animal implements Serializable {
 
     public Cerdo(int id, Tipo tipo, String nombre, Alimento alimento, Producto producto) {
         super(id, tipo, nombre, alimento, producto);
@@ -14,19 +17,22 @@ public class Cerdo extends Animal {
     public void producir(Granja g){
 
         int cant;
+        Random rand = new Random();
+
 
         switch (g.getEstacion()){
             case Estaciones.Primavera:
-                cant = (int) Math.floor(Math.random() * 1 + 2);
+                cant = rand.nextInt(2) + 2;
                 break;
             case Estaciones.Verano:
-                cant = (int) Math.floor(Math.random() * 1 + 2);
+                cant = rand.nextInt(2)  + 2;
                 break;
             case Estaciones.Otono:
-                cant = (int) Math.floor(Math.random() * 1);
+                cant = rand.nextInt(2);
                 break;
             case Estaciones.Invierno:
                 cant = 0;
+                System.out.println(getNombre() + " no produce nada en invierno.");
                 break;
             default: cant = 0;
         }
