@@ -21,6 +21,7 @@ public class Main {
                     DB.mostrarAnimales();
                     break;
                 case 2:
+                    DB.insertarAnimal();
                     break;
                 case 3:
                     break;

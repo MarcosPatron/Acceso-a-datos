@@ -2,8 +2,10 @@ package org.example;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
-@Table(name = "animales")
+@Table(name = "Animales")
 public class Animal {
 
     @Id
@@ -14,7 +16,7 @@ public class Animal {
     private String nombre;
 
     @Column(name = "dia_insercion", nullable = false)
-    private Integer diaInsercion;
+    private LocalDate diaInsercion;
 
     @Column(nullable = false)
     private Double peso;
@@ -22,6 +24,16 @@ public class Animal {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Tipo tipo;
+
+    public Animal() {
+    }
+
+    public Animal(LocalDate diaInsercion, String nombre, Double peso, Tipo tipo) {
+        this.nombre = nombre;
+        this.diaInsercion = diaInsercion;
+        this.peso = peso;
+        this.tipo = tipo;
+    }
 
     public Long getId() {
         return id;
@@ -39,11 +51,11 @@ public class Animal {
         this.nombre = nombre;
     }
 
-    public Integer getDiaInsercion() {
+    public LocalDate getDiaInsercion() {
         return diaInsercion;
     }
 
-    public void setDiaInsercion(Integer dia_insercion) {
+    public void setDiaInsercion(LocalDate dia_insercion) {
         this.diaInsercion = dia_insercion;
     }
 
