@@ -11,6 +11,7 @@ public class DB {
 
     public static void mostrarAnimales(){
 
+        System.out.println(System.getProperty("java.class.path"));
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistencia-tienda");
         EntityManager entityManager = emf.createEntityManager();
 
@@ -29,6 +30,7 @@ public class DB {
             entityManager.getTransaction().commit();
         }
         catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
         finally {
