@@ -5,7 +5,6 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
