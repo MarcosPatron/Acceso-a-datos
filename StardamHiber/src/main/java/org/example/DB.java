@@ -27,8 +27,6 @@ public class DB {
                         ", Dia Insecion: " + a.getDiaInsercion() + ", Peso: " + a.getPeso() +
                         ", Tipo: " + a.getTipo());
             }
-
-            entityManager.getTransaction().commit();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -45,7 +43,6 @@ public class DB {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("stardamvalley");
         EntityManager entityManager = emf.createEntityManager();
 
-        LocalDate hoy = LocalDate.now();
         Scanner ent = new Scanner(System.in);
         double pesoF;
 
@@ -64,7 +61,7 @@ public class DB {
         try{
             entityManager.getTransaction().begin();
 
-            Animal a = new Animal(hoy, nombre, pesoF, tipo);
+            Animal a = new Animal(0, nombre, pesoF, tipo);
 
             entityManager.persist(a);
 
@@ -75,17 +72,72 @@ public class DB {
             entityManager.close();
             emf.close();
         }
-
-
-
-
     }
 
-    public static void modificarAnimal(){
+    public static void modificarAnimal(String id){
 
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("stardamvalley");
+        EntityManager entityManager = emf.createEntityManager();
+
+        Scanner ent = new Scanner(System.in);
+
+        try{
+            entityManager.getTransaction().begin();
+
+            Animal a = entityManager.find(Animal.class, Integer.parseInt(id));
+
+            if(a != null){
+                System.out.println("Dame el nuevo nombre del animal: ");
+                a.setNombre(ent.nextLine());
+
+                entityManager.merge(a);
+
+                System.out.println("Animal modificado");
+            }
+            else{
+                System.out.println("Animal no encontrado");
+            }
+
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            entityManager.close();
+            emf.close();
+        }
     }
 
-    public static void eliminarAnimal(){
+    public static void eliminarAnimal(String id){
 
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("stardamvalley");
+        EntityManager entityManager = emf.createEntityManager();
+
+        Scanner ent = new Scanner(System.in);
+
+        try {
+            entityManager.getTransaction().begin();
+
+            Animal a = entityManager.find(Animal.class, Integer.parseInt(id));
+
+            if (a != null) {
+                entityManager.remove(a);
+
+                System.out.println("Animal eliminado");
+            }
+            else{
+                System.out.println("Animal no eliminado");
+            }
+
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            entityManager.close();
+            emf.close();
+        }
     }
 }

@@ -8,27 +8,29 @@ import java.time.LocalDate;
 @Table(name = "Animales")
 public class Animal {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo")
+    private Tipo tipo;
+
+    @Column(name = "nombre", length = 50)
     private String nombre;
 
-    @Column(name = "dia_insercion", nullable = false)
-    private LocalDate diaInsercion;
+    @Column(name = "dia_insercion")
+    private Integer diaInsercion;
 
-    @Column(nullable = false)
+    @Column(name = "peso")
     private Double peso;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Tipo tipo;
 
     public Animal() {
     }
 
-    public Animal(LocalDate diaInsercion, String nombre, Double peso, Tipo tipo) {
+    public Animal(Integer diaInsercion, String nombre, Double peso, Tipo tipo) {
         this.nombre = nombre;
         this.diaInsercion = diaInsercion;
         this.peso = peso;
@@ -51,11 +53,11 @@ public class Animal {
         this.nombre = nombre;
     }
 
-    public LocalDate getDiaInsercion() {
+    public Integer getDiaInsercion() {
         return diaInsercion;
     }
 
-    public void setDiaInsercion(LocalDate dia_insercion) {
+    public void setDiaInsercion(Integer dia_insercion) {
         this.diaInsercion = dia_insercion;
     }
 

@@ -16,18 +16,22 @@ public class Main {
                     "\n3. Actualizar animal." +
                     "\n4. Eliminar animal." +
                     "\n5. Salir.");
-            switch (ent.nextInt()) {
-                case 1:
+            switch (ent.nextLine()) {
+                case "1":
                     DB.mostrarAnimales();
                     break;
-                case 2:
+                case "2":
                     DB.insertarAnimal();
                     break;
-                case 3:
+                case "3":
+                    System.out.println("Dame el ID del animal a modificar: ");
+                    DB.modificarAnimal(ent.nextLine());
                     break;
-                case 4:
+                case "4":
+                    System.out.println("Dame el ID del animal a modificar: ");
+                    DB.eliminarAnimal(ent.nextLine());
                     break;
-                case 5:
+                case "5":
                     exit = true;
                     break;
                 default:

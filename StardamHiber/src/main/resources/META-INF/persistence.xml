@@ -4,7 +4,7 @@
     <persistence-unit name="stardamvalley" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <!--  Tablas (clases) mapeadas en Java  -->
-        <class>org.example.Animales</class>
+        <class>org.example.Animal</class>
 
         <properties>
             <!--  Configuración de la conexión a la base de datos  -->
