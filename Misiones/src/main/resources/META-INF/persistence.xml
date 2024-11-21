@@ -4,7 +4,9 @@
     <persistence-unit name="misiones" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <!--  Tablas (clases) mapeadas en Java  -->
-        <class>org.example.Animal</class>
+        <class>org.example.Jugador</class>
+        <class>org.example.Mision</class>
+        <class>org.example.Recompensa</class>
 
         <properties>
             <!--  Configuración de la conexión a la base de datos  -->
