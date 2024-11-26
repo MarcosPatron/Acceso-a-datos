@@ -4,6 +4,11 @@ import java.util.Scanner;
 
 public class Main {
 
+    public static String pedirDato(){
+        Scanner ent = new Scanner(System.in);
+        return ent.nextLine();
+    }
+
     public static void menu(){
 
         Repository r  = Repository.getInstance();
@@ -24,10 +29,10 @@ public class Main {
                     "\n9. SALIR.");
             switch (ent.nextLine()){
                 case "1":
-
+                    r.anadirJugador();
                     break;
                 case "2":
-
+                    r.actualizarJugador();
                     break;
                 case "3":
 
@@ -45,15 +50,17 @@ public class Main {
                     r.mostrarMisiones();
                     break;
                 case "8":
-
+                    r.mostrarRecompensa();
                     break;
                 case "9":
-
+                    salir = true;
                     break;
                 default:
                     System.out.println("ERROR. Esa opción no existe.");
             }
         }while(!salir);
+
+        r.closeEntityManagerFactory();
     }
 
     public static void main(String[] args) {

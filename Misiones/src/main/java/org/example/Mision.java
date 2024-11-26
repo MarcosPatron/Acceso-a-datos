@@ -2,11 +2,15 @@ package org.example;
 
 import jakarta.persistence.*;
 
-import javax.xml.namespace.QName;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "Mision")
+@NamedQuery(
+        name = "Mision.findAll",
+        query = "SELECT m FROM Mision m"
+)
 public class Mision {
 
     @Id
@@ -18,7 +22,7 @@ public class Mision {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "recompensa_id", nullable = false)
-    private Recompensa recompensa;
+    private List<Recompensa> recompensa;
 
     @ManyToMany
     @JoinTable(
@@ -31,10 +35,10 @@ public class Mision {
     public Mision() {
     }
 
-    public Mision(String descripcion, Recompensa recompensa, List<Jugador> jugadores) {
+    public Mision(String descripcion) {
         this.descripcion = descripcion;
-        this.recompensa = recompensa;
-        this.jugadores = jugadores;
+        this.recompensa = new ArrayList<>();
+        this.jugadores = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -53,11 +57,11 @@ public class Mision {
         this.descripcion = descripcion;
     }
 
-    public Recompensa getRecompensa() {
+    public List<Recompensa> getRecompensa() {
         return recompensa;
     }
 
-    public void setRecompensa(Recompensa recompensa) {
+    public void setRecompensa(List <Recompensa> recompensa) {
         this.recompensa = recompensa;
     }
 

@@ -1,10 +1,15 @@
 package org.example;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "Jugador")
+@NamedQuery(
+        name = "Jugador.findAll",
+        query = "SELECT j FROM Jugador j"
+)
 public class Jugador {
 
     @Id
@@ -14,15 +19,15 @@ public class Jugador {
     @Column(nullable = false, length = 100)
     private String nombre;
 
-    @ManyToMany(mappedBy = "jugador")
+    @ManyToMany(mappedBy = "jugadores")
     private List<Mision> misiones;
 
     public Jugador() {
     }
 
-    public Jugador(String nombre, List<Mision> misiones) {
+    public Jugador(String nombre) {
         this.nombre = nombre;
-        this.misiones = misiones;
+        this.misiones = new ArrayList<>();
     }
 
     public Integer getId() {

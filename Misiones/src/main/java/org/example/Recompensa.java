@@ -6,6 +6,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "Recompensa")
+@NamedQuery(
+        name = "Recompensa.findAll",
+        query = "SELECT r FROM Recompensa r"
+)
 public class Recompensa {
 
     @Id
@@ -19,7 +23,7 @@ public class Recompensa {
     @Column(nullable = false, length = 50)
     private TipoRecompensa tipo;
 
-    @OneToMany(mappedBy = "Recompensa", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "recompensa", cascade = CascadeType.ALL)
     private List<Mision> misiones;
 
     public Recompensa() {
