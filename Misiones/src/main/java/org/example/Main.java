@@ -1,5 +1,8 @@
 package org.example;
 
+import jakarta.persistence.EntityManager;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -9,9 +12,24 @@ public class Main {
         return ent.nextLine();
     }
 
+    public static int pedirNumero(){
+
+        Scanner ent = new Scanner(System.in);
+        int num;
+
+        try{
+            num = ent.nextInt();
+        }catch (InputMismatchException e){
+            System.out.println("Debes introducir un numero.");
+            num = -1;
+        }
+        return num;
+    }
+
     public static void menu(){
 
         Repository r  = Repository.getInstance();
+        EntityManager entityManager = r.getEntityManager();
 
         Scanner ent = new Scanner(System.in);
         boolean salir = false;
@@ -29,28 +47,28 @@ public class Main {
                     "\n9. SALIR.");
             switch (ent.nextLine()){
                 case "1":
-                    r.anadirJugador();
+                    r.anadirJugador(entityManager);
                     break;
                 case "2":
-                    r.actualizarJugador();
+                    r.actualizarJugador(entityManager);
                     break;
                 case "3":
-                    r.insertarMision();
+                    r.insertarMision(entityManager);
                     break;
                 case "4":
-                    r.asignarMision();
+                    r.asignarMision(entityManager);
                     break;
                 case "5":
-                    r.rechazarMision();
+                    r.rechazarMision(entityManager);
                     break;
                 case "6":
-                    r.modificarRecompensa();
+                    r.modificarRecompensa(entityManager);
                     break;
                 case "7":
-                    r.mostrarMisiones();
+                    r.mostrarMisiones(entityManager);
                     break;
                 case "8":
-                    r.mostrarRecompensa();
+                    r.mostrarRecompensa(entityManager);
                     break;
                 case "9":
                     salir = true;
@@ -60,6 +78,7 @@ public class Main {
             }
         }while(!salir);
 
+        entityManager.close();
         r.closeEntityManagerFactory();
     }
 

@@ -8,6 +8,7 @@ import jakarta.persistence.Query;
 import java.util.List;
 
 import static org.example.Main.pedirDato;
+import static org.example.Main.pedirNumero;
 
 public class Repository {
 
@@ -35,9 +36,7 @@ public class Repository {
         }
     }
 
-    public void anadirJugador(){
-        getInstance();
-        EntityManager entityManager = getEntityManager();
+    public void anadirJugador(EntityManager entityManager){
 
         try{
             System.out.println("Dame el nombre del jugador: ");
@@ -52,22 +51,28 @@ public class Repository {
         catch (Exception e) {
             throw new RuntimeException(e);
         }
-        finally {
-            entityManager.close();
-        }
     }
 
-    public void actualizarJugador() {
+    public void actualizarJugador(EntityManager entityManager) {
 
-        getInstance();
-        EntityManager entityManager = getEntityManager();
 
         try{
             System.out.println("Dame el jugador a modificar(ID):");
-            mostrarJugador();
-            Jugador j = entityManager.find(Jugador.class, Integer.parseInt(pedirDato()));
+            mostrarJugador(entityManager);
+            Jugador j;
+            int eleccion = pedirNumero();
+            if (eleccion != -1){
+                j = entityManager.find(Jugador.class, eleccion);
+            }
+            else{
+                return;
+            }
+            if(j == null){
+                System.out.println("Has seleccionado una opción no valida");
+                return;
+            }
 
-            System.out.println("Dame el nombre del jugador: ");
+            System.out.println("Dame el nuevo nombre del jugador: ");
             String nNombre = pedirDato();
 
             j.setNombre(nNombre);
@@ -79,23 +84,28 @@ public class Repository {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        finally {
-            entityManager.close();
-        }
     }
 
-    public void insertarMision() {
-
-        getInstance();
-        EntityManager entityManager = getEntityManager();
+    public void insertarMision(EntityManager entityManager) {
 
         try{
             System.out.println("Dame la descripción de la misión:");
             String desc = pedirDato();
 
             System.out.println("¿Qué recompensa quieres que tenga la misión?:");
-            mostrarRecompensa();
-            Recompensa r = entityManager.find(Recompensa.class, Integer.parseInt(pedirDato()));
+            mostrarRecompensa(entityManager);
+            Recompensa r;
+            int eleccion = pedirNumero();
+            if (eleccion != -1){
+                r = entityManager.find(Recompensa.class, eleccion);
+            }
+            else {
+                return;
+            }
+            if(r == null){
+                System.out.println("Has seleccionado una opción no valida");
+                return;
+            }
 
             Mision m = new Mision(desc, r);
 
@@ -106,26 +116,42 @@ public class Repository {
         catch (Exception e) {
             throw new RuntimeException(e);
         }
-        finally {
-            entityManager.close();
-        }
     }
 
-    public void asignarMision() {
-
-        getInstance();
-        EntityManager entityManager = getEntityManager();
+    public void asignarMision(EntityManager entityManager) {
 
         boolean enc = false;
 
         try{
             System.out.println("¿Qué jugador quieres asignar a la misión(ID)?");
-            mostrarJugador();
-            Jugador j = entityManager.find(Jugador.class, Integer.parseInt(pedirDato()));
+            mostrarJugador(entityManager);
+            Jugador j;
+            int eleccion = pedirNumero();
+            if (eleccion != -1){
+                j = entityManager.find(Jugador.class, eleccion);
+            }
+            else{
+                return;
+            }
+            if(j == null){
+                System.out.println("Has seleccionado una opción no valida");
+                return;
+            }
 
             System.out.println("¿A qué misión quieres asignar el juagor(ID)?");
-            mostrarMisiones();
-            Mision m = entityManager.find(Mision.class, Integer.parseInt(pedirDato()));
+            mostrarMisiones(entityManager);
+            Mision m;
+            eleccion = pedirNumero();
+            if (eleccion != -1){
+                m = entityManager.find(Mision.class, eleccion);
+            }
+            else{
+                return;
+            }
+            if(m == null){
+                System.out.println("Has seleccionado una opción no valida");
+                return;
+            }
 
             // Compruebo si el jugador seleccionado ya ha sido introfucido en la misión
             for (int i = 0; i < m.getJugadores().size() && !enc; i++) {
@@ -149,24 +175,30 @@ public class Repository {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        finally {
-            entityManager.close();
-        }
     }
 
-    public void rechazarMision() {
-        getInstance();
-        EntityManager entityManager = getEntityManager();
+    public void rechazarMision(EntityManager entityManager) {
 
         try{
 
             System.out.println("¿A qué misión quieres asignar el juagor(ID)?");
-            mostrarMisiones();
-            Mision m = entityManager.find(Mision.class, Integer.parseInt(pedirDato()));
+            mostrarMisiones(entityManager);
+            Mision m;
+            int eleccion = pedirNumero();
+            if (eleccion != -1){
+                m = entityManager.find(Mision.class, eleccion);
+            }
+            else{
+                return;
+            }
+            if(m == null){
+                System.out.println("Has seleccionado una opción no valida");
+                return;
+            }
 
             System.out.println("¿Qué jugador quieres que rechace la misión?");
 
-            if(m.getJugadores().size() > 0){
+            if(!m.getJugadores().isEmpty()){
                 for (int i = 1; i <= m.getJugadores().size(); i++) {
 
                     System.out.println(i + ". ID: " + m.getJugadores().get(i-1).getId() + ", Nombre: " + m.getJugadores().get(i-1).getNombre());
@@ -183,23 +215,40 @@ public class Repository {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        finally {
-            entityManager.close();
-        }
     }
 
-    public void modificarRecompensa(){
-        getInstance();
-        EntityManager entityManager = getEntityManager();
+    public void modificarRecompensa(EntityManager entityManager){
 
         try{
             System.out.println("¿A qué misión quieres cambiar la recompensa(ID)?");
-            mostrarMisiones();
-            Mision m = entityManager.find(Mision.class, Integer.parseInt(pedirDato()));
+            mostrarMisiones(entityManager);
+            Mision m;
+            int eleccion = pedirNumero();
+            if (eleccion != -1){
+                m = entityManager.find(Mision.class, eleccion);
+            }
+            else{
+                return;
+            }
+            if(m == null){
+                System.out.println("Has seleccionado una opción no valida");
+                return;
+            }
 
             System.out.println("¿Qué recompensa quieres que tenga la misión?:");
-            mostrarRecompensa();
-            Recompensa r = entityManager.find(Recompensa.class, Integer.parseInt(pedirDato()));
+            mostrarRecompensa(entityManager);
+            Recompensa r;
+            eleccion = pedirNumero();
+            if (eleccion != -1){
+                r = entityManager.find(Recompensa.class, eleccion);
+            }
+            else {
+                return;
+            }
+            if(r == null){
+                System.out.println("Has seleccionado una opción no valida");
+                return;
+            }
 
             m.setRecompensa(r);
 
@@ -210,18 +259,11 @@ public class Repository {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-            finally {
-            entityManager.close();
-        }
     }
 
-    public void mostrarMisiones() {
-        getInstance();
-        EntityManager entityManager = getEntityManager();
+    public void mostrarMisiones(EntityManager entityManager) {
 
         try{
-            entityManager.getTransaction().begin();
-
             Query query = entityManager.createNamedQuery("Mision.findAll");
             List<Mision> misiones = query.getResultList();
 
@@ -232,18 +274,11 @@ public class Repository {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        finally {
-            entityManager.close();
-        }
     }
 
-    public void mostrarRecompensa(){
-        getInstance();
-        EntityManager entityManager = getEntityManager();
+    public void mostrarRecompensa(EntityManager entityManager){
 
         try{
-            entityManager.getTransaction().begin();
-
             Query query = entityManager.createNamedQuery("Recompensa.findAll");
             List<Recompensa> recompensas = query.getResultList();
 
@@ -254,18 +289,11 @@ public class Repository {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        finally {
-            entityManager.close();
-        }
     }
 
-    public void mostrarJugador(){
-        getInstance();
-        EntityManager entityManager = getEntityManager();
+    public void mostrarJugador(EntityManager entityManager){
 
         try{
-            entityManager.getTransaction().begin();
-
             Query query = entityManager.createNamedQuery("Jugador.findAll");
             List<Jugador> jugadores = query.getResultList();
 
@@ -275,9 +303,6 @@ public class Repository {
 
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-        finally {
-            entityManager.close();
         }
     }
 }
