@@ -180,9 +180,16 @@ public class Repository {
     public void rechazarMision(EntityManager entityManager) {
 
         try{
-
             System.out.println("¿A qué misión quieres asignar el juagor(ID)?");
-            mostrarMisiones(entityManager);
+
+            Query query = entityManager.createNamedQuery("Mision.findAll");
+            List<Mision> misiones = query.getResultList();
+
+            for ( Mision m : misiones){
+                if(m.getJugadores().size() != 0){
+                    System.out.println("ID: " + m.getId() + ", Descripción: " + m.getDescripcion() + ", recompensa: " + m.getRecompensa().getNombre());
+                }
+            }
             Mision m;
             int eleccion = pedirNumero();
             if (eleccion != -1){
@@ -268,7 +275,15 @@ public class Repository {
             List<Mision> misiones = query.getResultList();
 
             for ( Mision m : misiones){
-                System.out.println("ID: " + m.getId() + ", Descripción: " + m.getDescripcion() + ", recompensa: " + m.getRecompensa().getNombre());
+                System.out.println("ID: " + m.getId() + ", Descripción: "
+                        + m.getDescripcion() + ", recompensa: " + m.getRecompensa().getNombre());
+                if(!m.getJugadores().isEmpty()){
+                    System.out.print("    Jugadores asocidos: ");
+                    for (Jugador j : m.getJugadores()){
+                        System.out.print(j.getNombre() + " | ");
+                    }
+                    System.out.println();
+                }
             }
 
         } catch (Exception e) {
@@ -284,6 +299,14 @@ public class Repository {
 
             for ( Recompensa r : recompensas){
                 System.out.println("ID: " + r.getId() + ", Nombre: " + r.getNombre() + ", Tipo: " + r.getTipo());
+
+                if(!r.getMisiones().isEmpty()){
+                    System.out.print("    Misiones donde se puede conseguir: ");
+                    for (Mision m : r.getMisiones()){
+                        System.out.print(m.getDescripcion() + " | ");
+                    }
+                    System.out.println();
+                }
             }
 
         } catch (Exception e) {
