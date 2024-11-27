@@ -23,7 +23,7 @@ public class Main {
                     "\n3. Insertar misión." +
                     "\n4. Asignar misión." +
                     "\n5. Rechazar misión." +
-                    "\n6. Modiifcar recompensa misión." +
+                    "\n6. Modifcar recompensa misión." +
                     "\n7. Consultar misiones." +
                     "\n8. Consultar recompensas." +
                     "\n9. SALIR.");
@@ -35,16 +35,16 @@ public class Main {
                     r.actualizarJugador();
                     break;
                 case "3":
-
+                    r.insertarMision();
                     break;
                 case "4":
-
+                    r.asignarMision();
                     break;
                 case "5":
-
+                    r.rechazarMision();
                     break;
                 case "6":
-
+                    r.modificarRecompensa();
                     break;
                 case "7":
                     r.mostrarMisiones();

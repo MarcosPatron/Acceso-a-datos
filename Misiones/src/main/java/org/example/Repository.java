@@ -57,7 +57,7 @@ public class Repository {
         }
     }
 
-    public void actualizarJugador(){
+    public void actualizarJugador() {
 
         getInstance();
         EntityManager entityManager = getEntityManager();
@@ -84,7 +84,7 @@ public class Repository {
         }
     }
 
-    public void insertarMision(){
+    public void insertarMision() {
 
         getInstance();
         EntityManager entityManager = getEntityManager();
@@ -97,18 +97,120 @@ public class Repository {
             mostrarRecompensa();
             Recompensa r = entityManager.find(Recompensa.class, Integer.parseInt(pedirDato()));
 
-            System.out.println("¿Qué jugador quieres que tenga la misión?:");
-            mostrarRecompensa();
-            Jugador j = entityManager.find(Jugador.class, Integer.parseInt(pedirDato()));
+            Mision m = new Mision(desc, r);
 
-            Mision m = new Mision(desc);
-
-            
+            entityManager.getTransaction().begin();
+            entityManager.persist(m);
+            entityManager.getTransaction().commit();
         }
         catch (Exception e) {
             throw new RuntimeException(e);
         }
         finally {
+            entityManager.close();
+        }
+    }
+
+    public void asignarMision() {
+
+        getInstance();
+        EntityManager entityManager = getEntityManager();
+
+        boolean enc = false;
+
+        try{
+            System.out.println("¿Qué jugador quieres asignar a la misión(ID)?");
+            mostrarJugador();
+            Jugador j = entityManager.find(Jugador.class, Integer.parseInt(pedirDato()));
+
+            System.out.println("¿A qué misión quieres asignar el juagor(ID)?");
+            mostrarMisiones();
+            Mision m = entityManager.find(Mision.class, Integer.parseInt(pedirDato()));
+
+            // Compruebo si el jugador seleccionado ya ha sido introfucido en la misión
+            for (int i = 0; i < m.getJugadores().size() && !enc; i++) {
+                 if(m.getJugadores().get(i).getId() == j.getId()){
+                     enc = true;
+                 }
+            }
+
+            if(!enc){
+                m.getJugadores().add(j);
+            }
+            else{
+                System.out.println("Este jugador ya ha sido asigando a esta misión");
+            }
+
+
+            entityManager.getTransaction().begin();
+            entityManager.persist(m);
+            entityManager.getTransaction().commit();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            entityManager.close();
+        }
+    }
+
+    public void rechazarMision() {
+        getInstance();
+        EntityManager entityManager = getEntityManager();
+
+        try{
+
+            System.out.println("¿A qué misión quieres asignar el juagor(ID)?");
+            mostrarMisiones();
+            Mision m = entityManager.find(Mision.class, Integer.parseInt(pedirDato()));
+
+            System.out.println("¿Qué jugador quieres que rechace la misión?");
+
+            if(m.getJugadores().size() > 0){
+                for (int i = 1; i <= m.getJugadores().size(); i++) {
+
+                    System.out.println(i + ". ID: " + m.getJugadores().get(i-1).getId() + ", Nombre: " + m.getJugadores().get(i-1).getNombre());
+                }
+            }else{
+                System.out.println("No hay jugadores asignados a esta misión");
+            }
+            m.getJugadores().remove(Integer.parseInt(pedirDato()) - 1);
+
+            entityManager.getTransaction().begin();
+            entityManager.persist(m);
+            entityManager.getTransaction().commit();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            entityManager.close();
+        }
+    }
+
+    public void modificarRecompensa(){
+        getInstance();
+        EntityManager entityManager = getEntityManager();
+
+        try{
+            System.out.println("¿A qué misión quieres cambiar la recompensa(ID)?");
+            mostrarMisiones();
+            Mision m = entityManager.find(Mision.class, Integer.parseInt(pedirDato()));
+
+            System.out.println("¿Qué recompensa quieres que tenga la misión?:");
+            mostrarRecompensa();
+            Recompensa r = entityManager.find(Recompensa.class, Integer.parseInt(pedirDato()));
+
+            m.setRecompensa(r);
+
+            entityManager.getTransaction().begin();
+            entityManager.persist(m);
+            entityManager.getTransaction().commit();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+            finally {
             entityManager.close();
         }
     }

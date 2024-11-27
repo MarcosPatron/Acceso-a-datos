@@ -22,7 +22,7 @@ public class Mision {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "recompensa_id", nullable = false)
-    private List<Recompensa> recompensa;
+    private Recompensa recompensa;
 
     @ManyToMany
     @JoinTable(
@@ -35,9 +35,9 @@ public class Mision {
     public Mision() {
     }
 
-    public Mision(String descripcion) {
+    public Mision(String descripcion, Recompensa recompensa) {
         this.descripcion = descripcion;
-        this.recompensa = new ArrayList<>();
+        this.recompensa = recompensa;
         this.jugadores = new ArrayList<>();
     }
 
@@ -57,11 +57,11 @@ public class Mision {
         this.descripcion = descripcion;
     }
 
-    public List<Recompensa> getRecompensa() {
+    public Recompensa getRecompensa() {
         return recompensa;
     }
 
-    public void setRecompensa(List <Recompensa> recompensa) {
+    public void setRecompensa(Recompensa recompensa) {
         this.recompensa = recompensa;
     }
 
