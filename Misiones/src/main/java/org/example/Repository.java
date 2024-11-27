@@ -180,7 +180,7 @@ public class Repository {
     public void rechazarMision(EntityManager entityManager) {
 
         try{
-            System.out.println("¿A qué misión quieres asignar el juagor(ID)?");
+            System.out.println("¿A qué misión quieres asignar el jugador(ID)?");
 
             Query query = entityManager.createNamedQuery("Mision.findAll");
             List<Mision> misiones = query.getResultList();
@@ -324,6 +324,29 @@ public class Repository {
                 System.out.println("ID: " + j.getId() + ", Nombre: " + j.getNombre());
             }
 
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //------------------------------------EJERCICIO 2-------------------------------------------------------
+
+    public void buscarMision(EntityManager entityManager, String palabra){
+
+        try{
+            String patron = "%" + palabra + "%";
+
+            Query query = entityManager.createQuery("SELECT m FROM Mision m WHERE m.descripcion LIKE :patron", Mision.class);
+            query.setParameter("patron", patron);
+            List<Mision> misiones = query.getResultList();
+
+            if (misiones.isEmpty()) {
+                System.out.println("No se encontraron misiones con la palabra clave: " + palabra);
+            } else {
+                for (Mision m : misiones) {
+                    System.out.println("ID: " + m.getId() + ", Descripción: " + m.getDescripcion() + ", Recompensa: " + m.getRecompensa().getNombre());
+                }
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

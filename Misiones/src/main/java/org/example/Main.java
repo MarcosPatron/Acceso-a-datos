@@ -82,8 +82,47 @@ public class Main {
         r.closeEntityManagerFactory();
     }
 
+    public static void nuevoMenu(){
+
+        boolean salir = false;
+        Repository r  = Repository.getInstance();
+        EntityManager entityManager = r.getEntityManager();
+
+        do{
+            System.out.println("-----MENU-----" +
+                    "\n1. Buscar misiones por palabra." +
+                    "\n2. Buscar recompensas por tipo." +
+                    "\n3. Buscar jugadro por ID." +
+                    "\n4. Buscar mison por tipo recompensa." +
+                    "\n5. Buscar jugdores con mision." +
+                    "\n6. Salir.");
+
+            switch (pedirDato()){
+                case "1":
+                    System.out.println("Por que palabra quieres buscar: ");
+                    r.buscarMision(entityManager, pedirDato());
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                case "5":
+                    break;
+                case "6":
+                    break;
+                default:
+                    System.out.println("ERROR");
+            }
+        }while(!salir);
+
+        entityManager.close();
+        r.closeEntityManagerFactory();
+    }
+
     public static void main(String[] args) {
 
-        menu();
+        nuevoMenu();
     }
 }
