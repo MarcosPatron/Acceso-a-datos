@@ -36,9 +36,9 @@ public class Repository {
         }
     }
 
-    public void anadirJugador(EntityManager entityManager){
+    public void anadirJugador(EntityManager entityManager) {
 
-        try{
+        try {
             System.out.println("Dame el nombre del jugador: ");
             String nombre = pedirDato();
 
@@ -47,8 +47,7 @@ public class Repository {
             entityManager.getTransaction().begin();
             entityManager.persist(j);
             entityManager.getTransaction().commit();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -56,18 +55,17 @@ public class Repository {
     public void actualizarJugador(EntityManager entityManager) {
 
 
-        try{
+        try {
             System.out.println("Dame el jugador a modificar(ID):");
             mostrarJugador(entityManager);
             Jugador j;
             int eleccion = pedirNumero();
-            if (eleccion != -1){
+            if (eleccion != -1) {
                 j = entityManager.find(Jugador.class, eleccion);
-            }
-            else{
+            } else {
                 return;
             }
-            if(j == null){
+            if (j == null) {
                 System.out.println("Has seleccionado una opción no valida");
                 return;
             }
@@ -88,7 +86,7 @@ public class Repository {
 
     public void insertarMision(EntityManager entityManager) {
 
-        try{
+        try {
             System.out.println("Dame la descripción de la misión:");
             String desc = pedirDato();
 
@@ -96,13 +94,12 @@ public class Repository {
             mostrarRecompensa(entityManager);
             Recompensa r;
             int eleccion = pedirNumero();
-            if (eleccion != -1){
+            if (eleccion != -1) {
                 r = entityManager.find(Recompensa.class, eleccion);
-            }
-            else {
+            } else {
                 return;
             }
-            if(r == null){
+            if (r == null) {
                 System.out.println("Has seleccionado una opción no valida");
                 return;
             }
@@ -112,8 +109,7 @@ public class Repository {
             entityManager.getTransaction().begin();
             entityManager.persist(m);
             entityManager.getTransaction().commit();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -122,18 +118,17 @@ public class Repository {
 
         boolean enc = false;
 
-        try{
+        try {
             System.out.println("¿Qué jugador quieres asignar a la misión(ID)?");
             mostrarJugador(entityManager);
             Jugador j;
             int eleccion = pedirNumero();
-            if (eleccion != -1){
+            if (eleccion != -1) {
                 j = entityManager.find(Jugador.class, eleccion);
-            }
-            else{
+            } else {
                 return;
             }
-            if(j == null){
+            if (j == null) {
                 System.out.println("Has seleccionado una opción no valida");
                 return;
             }
@@ -142,28 +137,26 @@ public class Repository {
             mostrarMisiones(entityManager);
             Mision m;
             eleccion = pedirNumero();
-            if (eleccion != -1){
+            if (eleccion != -1) {
                 m = entityManager.find(Mision.class, eleccion);
-            }
-            else{
+            } else {
                 return;
             }
-            if(m == null){
+            if (m == null) {
                 System.out.println("Has seleccionado una opción no valida");
                 return;
             }
 
             // Compruebo si el jugador seleccionado ya ha sido introfucido en la misión
             for (int i = 0; i < m.getJugadores().size() && !enc; i++) {
-                 if(m.getJugadores().get(i).getId() == j.getId()){
-                     enc = true;
-                 }
+                if (m.getJugadores().get(i).getId() == j.getId()) {
+                    enc = true;
+                }
             }
 
-            if(!enc){
+            if (!enc) {
                 m.getJugadores().add(j);
-            }
-            else{
+            } else {
                 System.out.println("Este jugador ya ha sido asigando a esta misión");
             }
 
@@ -179,38 +172,37 @@ public class Repository {
 
     public void rechazarMision(EntityManager entityManager) {
 
-        try{
+        try {
             System.out.println("¿A qué misión quieres asignar el jugador(ID)?");
 
             Query query = entityManager.createNamedQuery("Mision.findAll");
             List<Mision> misiones = query.getResultList();
 
-            for ( Mision m : misiones){
-                if(m.getJugadores().size() != 0){
+            for (Mision m : misiones) {
+                if (m.getJugadores().size() != 0) {
                     System.out.println("ID: " + m.getId() + ", Descripción: " + m.getDescripcion() + ", recompensa: " + m.getRecompensa().getNombre());
                 }
             }
             Mision m;
             int eleccion = pedirNumero();
-            if (eleccion != -1){
+            if (eleccion != -1) {
                 m = entityManager.find(Mision.class, eleccion);
-            }
-            else{
+            } else {
                 return;
             }
-            if(m == null){
+            if (m == null) {
                 System.out.println("Has seleccionado una opción no valida");
                 return;
             }
 
             System.out.println("¿Qué jugador quieres que rechace la misión?");
 
-            if(!m.getJugadores().isEmpty()){
+            if (!m.getJugadores().isEmpty()) {
                 for (int i = 1; i <= m.getJugadores().size(); i++) {
 
-                    System.out.println(i + ". ID: " + m.getJugadores().get(i-1).getId() + ", Nombre: " + m.getJugadores().get(i-1).getNombre());
+                    System.out.println(i + ". ID: " + m.getJugadores().get(i - 1).getId() + ", Nombre: " + m.getJugadores().get(i - 1).getNombre());
                 }
-            }else{
+            } else {
                 System.out.println("No hay jugadores asignados a esta misión");
             }
             m.getJugadores().remove(Integer.parseInt(pedirDato()) - 1);
@@ -224,20 +216,19 @@ public class Repository {
         }
     }
 
-    public void modificarRecompensa(EntityManager entityManager){
+    public void modificarRecompensa(EntityManager entityManager) {
 
-        try{
+        try {
             System.out.println("¿A qué misión quieres cambiar la recompensa(ID)?");
             mostrarMisiones(entityManager);
             Mision m;
             int eleccion = pedirNumero();
-            if (eleccion != -1){
+            if (eleccion != -1) {
                 m = entityManager.find(Mision.class, eleccion);
-            }
-            else{
+            } else {
                 return;
             }
-            if(m == null){
+            if (m == null) {
                 System.out.println("Has seleccionado una opción no valida");
                 return;
             }
@@ -246,13 +237,12 @@ public class Repository {
             mostrarRecompensa(entityManager);
             Recompensa r;
             eleccion = pedirNumero();
-            if (eleccion != -1){
+            if (eleccion != -1) {
                 r = entityManager.find(Recompensa.class, eleccion);
-            }
-            else {
+            } else {
                 return;
             }
-            if(r == null){
+            if (r == null) {
                 System.out.println("Has seleccionado una opción no valida");
                 return;
             }
@@ -270,16 +260,16 @@ public class Repository {
 
     public void mostrarMisiones(EntityManager entityManager) {
 
-        try{
+        try {
             Query query = entityManager.createNamedQuery("Mision.findAll");
             List<Mision> misiones = query.getResultList();
 
-            for ( Mision m : misiones){
+            for (Mision m : misiones) {
                 System.out.println("ID: " + m.getId() + ", Descripción: "
                         + m.getDescripcion() + ", recompensa: " + m.getRecompensa().getNombre());
-                if(!m.getJugadores().isEmpty()){
+                if (!m.getJugadores().isEmpty()) {
                     System.out.print("    Jugadores asocidos: ");
-                    for (Jugador j : m.getJugadores()){
+                    for (Jugador j : m.getJugadores()) {
                         System.out.print(j.getNombre() + " | ");
                     }
                     System.out.println();
@@ -291,18 +281,18 @@ public class Repository {
         }
     }
 
-    public void mostrarRecompensa(EntityManager entityManager){
+    public void mostrarRecompensa(EntityManager entityManager) {
 
-        try{
+        try {
             Query query = entityManager.createNamedQuery("Recompensa.findAll");
             List<Recompensa> recompensas = query.getResultList();
 
-            for ( Recompensa r : recompensas){
+            for (Recompensa r : recompensas) {
                 System.out.println("ID: " + r.getId() + ", Nombre: " + r.getNombre() + ", Tipo: " + r.getTipo());
 
-                if(!r.getMisiones().isEmpty()){
+                if (!r.getMisiones().isEmpty()) {
                     System.out.print("    Misiones donde se puede conseguir: ");
-                    for (Mision m : r.getMisiones()){
+                    for (Mision m : r.getMisiones()) {
                         System.out.print(m.getDescripcion() + " | ");
                     }
                     System.out.println();
@@ -314,13 +304,13 @@ public class Repository {
         }
     }
 
-    public void mostrarJugador(EntityManager entityManager){
+    public void mostrarJugador(EntityManager entityManager) {
 
-        try{
+        try {
             Query query = entityManager.createNamedQuery("Jugador.findAll");
             List<Jugador> jugadores = query.getResultList();
 
-            for ( Jugador j : jugadores){
+            for (Jugador j : jugadores) {
                 System.out.println("ID: " + j.getId() + ", Nombre: " + j.getNombre());
             }
 
@@ -331,9 +321,9 @@ public class Repository {
 
     //------------------------------------EJERCICIO 2-------------------------------------------------------
 
-    public void buscarMision(EntityManager entityManager, String palabra){
+    public void buscarMision(EntityManager entityManager, String palabra) {
 
-        try{
+        try {
             String patron = "%" + palabra + "%";
 
             Query query = entityManager.createQuery("SELECT m FROM Mision m WHERE m.descripcion LIKE :patron", Mision.class);
@@ -347,6 +337,88 @@ public class Repository {
                     System.out.println("ID: " + m.getId() + ", Descripción: " + m.getDescripcion() + ", Recompensa: " + m.getRecompensa().getNombre());
                 }
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void buscarPorTipo(EntityManager entityManager) {
+
+        try {
+            System.out.println("¿Por qué tipo quieres buscar?");
+            TipoRecompensa[] tipos = TipoRecompensa.values();
+            for (int i = 0; i < tipos.length; i++) {
+                System.out.println((i+1) + ". " + tipos[i]);
+            }
+            TipoRecompensa tipo = TipoRecompensa.values()[pedirNumero()-1];
+
+            Query query = entityManager.createQuery("SELECT r FROM Recompensa r WHERE r.tipo = :tipo", Recompensa.class);
+            query.setParameter("tipo", tipo);
+            List<Recompensa> recompensas = query.getResultList();
+
+            if (recompensas.isEmpty()) {
+                System.out.println("No se encontraron recompensas con la palabra clave: " + tipo);
+            } else {
+                for (Recompensa r : recompensas) {
+                    System.out.println("ID: " + r.getId() + ", Nombre: " + r.getNombre() + ", Tipo: " + r.getTipo());
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void jugadorPorId(EntityManager entityManager){
+
+        try{
+            System.out.println("Dame el ID del jugador a buscar: ");
+            int id = pedirNumero();
+
+            Query query = entityManager.createQuery("SELECT j FROM Jugador j WHERE j.id = :id", Recompensa.class);
+            query.setParameter("id", id);
+            Jugador j = (Jugador) query.getSingleResult();
+
+            System.out.println("ID: " + j.getId() + ", Nombre: " + j.getNombre());
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void buscarMisionPorTipoRecompensa(EntityManager entityManager){
+
+        try{
+            System.out.println("¿Por qué tipo quieres buscar?");
+            TipoRecompensa[] tipos = TipoRecompensa.values();
+            for (int i = 0; i < tipos.length; i++) {
+                System.out.println((i+1) + ". " + tipos[i]);
+            }
+            TipoRecompensa tipo = TipoRecompensa.values()[pedirNumero()-1];
+
+            Query query = entityManager.createQuery("SELECT m FROM Mision m JOIN m.recompensa WHERE tipo = :tipo", Mision.class);
+            query.setParameter("tipo", tipo);
+            List<Mision> misiones = query.getResultList();
+
+            for (Mision m : misiones) {
+                System.out.println("ID: " + m.getId() + ", Descripción: " + m.getDescripcion() + ", Recompensa: " + m.getRecompensa().getNombre());
+            }
+        }
+        catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void jugadoresConMision(EntityManager entityManager){
+
+        try{
+            Query query = entityManager.createQuery("SELECT DISTINCT j FROM Jugador j JOIN j.misiones m", Jugador.class);
+            List<Jugador> jugadores = query.getResultList();
+
+            for (Jugador j : jugadores) {
+                System.out.println("ID: " + j.getId() + ", Nombre: " + j.getNombre());
+                System.out.println("Mision: " + j.getMisiones().getFirst().getDescripcion());
+            }
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

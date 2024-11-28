@@ -92,7 +92,7 @@ public class Main {
             System.out.println("-----MENU-----" +
                     "\n1. Buscar misiones por palabra." +
                     "\n2. Buscar recompensas por tipo." +
-                    "\n3. Buscar jugadro por ID." +
+                    "\n3. Buscar jugador por ID." +
                     "\n4. Buscar mison por tipo recompensa." +
                     "\n5. Buscar jugdores con mision." +
                     "\n6. Salir.");
@@ -103,14 +103,19 @@ public class Main {
                     r.buscarMision(entityManager, pedirDato());
                     break;
                 case "2":
+                    r.buscarPorTipo(entityManager);
                     break;
                 case "3":
+                    r.jugadorPorId(entityManager);
                     break;
                 case "4":
+                    r.buscarMisionPorTipoRecompensa(entityManager);
                     break;
                 case "5":
+                    r.jugadoresConMision(entityManager);
                     break;
                 case "6":
+                    salir = true;
                     break;
                 default:
                     System.out.println("ERROR");
@@ -123,6 +128,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+        //menu();
         nuevoMenu();
     }
 }
