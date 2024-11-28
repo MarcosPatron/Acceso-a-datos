@@ -100,7 +100,7 @@ public class Main {
             switch (pedirDato()){
                 case "1":
                     System.out.println("Por que palabra quieres buscar: ");
-                    r.buscarMision(entityManager, pedirDato());
+                    r.buscarMision(entityManager, pedirDato()   );
                     break;
                 case "2":
                     r.buscarPorTipo(entityManager);
